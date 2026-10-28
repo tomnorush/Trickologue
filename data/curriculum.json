@@ -1,0 +1,835 @@
+{
+  "version": 1,
+  "source": "Trickologue book (first edition) — names only; descriptions and cues stay in the paid book.",
+  "levels": [
+    {
+      "id": "level1",
+      "numeral": "I",
+      "theme": {
+        "en": "Foundations",
+        "lt": "Pagrindai"
+      },
+      "families": [
+        {
+          "id": "kick",
+          "tricks": [
+            {
+              "id": "level1.kick.front",
+              "name": "FRONT",
+              "aka": "Front kick",
+              "legacyKey": "level1.kick.front.l"
+            },
+            {
+              "id": "level1.kick.back",
+              "name": "BACK",
+              "aka": "Back kick",
+              "legacyKey": "level1.kick.back.r"
+            },
+            {
+              "id": "level1.kick.side",
+              "name": "SIDE",
+              "aka": "Side kick",
+              "legacyKey": "level1.kick.side.r"
+            },
+            {
+              "id": "level1.kick.crescent-in-out",
+              "name": "CRESCENT (IN/OUT)",
+              "aka": "Inside and outside crescent",
+              "legacyKey": "level1.kick.crescent-in-out.l"
+            },
+            {
+              "id": "level1.kick.round",
+              "name": "ROUND",
+              "aka": "Roundhouse kick",
+              "legacyKey": "level1.kick.round.r"
+            },
+            {
+              "id": "level1.kick.hook",
+              "name": "HOOK",
+              "aka": "Hook kick",
+              "legacyKey": "level1.kick.hook.l"
+            },
+            {
+              "id": "level1.kick.butterfly",
+              "name": "BUTTERFLY",
+              "aka": "Butterfly kick, B-kick",
+              "legacyKey": "level1.kick.butterfly.l"
+            },
+            {
+              "id": "level1.kick.shant",
+              "name": "SHANT",
+              "legacyKey": "level1.kick.shant.r"
+            }
+          ]
+        },
+        {
+          "id": "setup",
+          "tricks": [
+            {
+              "id": "level1.setup.pop",
+              "name": "POP",
+              "legacyKey": "level1.setup.pop.l"
+            },
+            {
+              "id": "level1.setup.punch",
+              "name": "PUNCH",
+              "legacyKey": "level1.setup.punch.l"
+            },
+            {
+              "id": "level1.setup.front-sweep",
+              "name": "FRONT SWEEP",
+              "legacyKey": "level1.setup.front-sweep.l"
+            },
+            {
+              "id": "level1.setup.cartwheel",
+              "name": "CARTWHEEL",
+              "legacyKey": "level1.setup.cartwheel.l"
+            },
+            {
+              "id": "level1.setup.reverse-pop",
+              "name": "REVERSE POP",
+              "legacyKey": "level1.setup.reverse-pop.r"
+            },
+            {
+              "id": "level1.setup.round-off",
+              "name": "ROUND OFF",
+              "aka": "Roundoff",
+              "legacyKey": "level1.setup.round-off.r"
+            },
+            {
+              "id": "level1.setup.back-sweep",
+              "name": "BACK SWEEP",
+              "legacyKey": "level1.setup.back-sweep.r"
+            },
+            {
+              "id": "level1.setup.carry-through",
+              "name": "CARRY-THROUGH",
+              "aka": "Carrythrough",
+              "legacyKey": "level1.setup.carrythough.r"
+            }
+          ]
+        },
+        {
+          "id": "flip",
+          "tricks": [
+            {
+              "id": "level1.flip.roll",
+              "name": "ROLL",
+              "aka": "Forward and backward roll",
+              "legacyKey": "level1.flip.roll.l"
+            },
+            {
+              "id": "level1.flip.dive",
+              "name": "DIVE",
+              "aka": "Dive roll",
+              "legacyKey": "level1.flip.dive.r"
+            },
+            {
+              "id": "level1.flip.handstand",
+              "name": "HANDSTAND",
+              "aka": "Bananeira in capoeira",
+              "legacyKey": "level1.flip.handstand.l"
+            },
+            {
+              "id": "level1.flip.front-flack",
+              "name": "FRONT FLACK",
+              "aka": "Front handspring, flic-flac",
+              "legacyKey": "level1.flip.front-flack.l"
+            },
+            {
+              "id": "level1.flip.bridge",
+              "name": "BRIDGE",
+              "aka": "Ponte in capoeira",
+              "legacyKey": "level1.flip.bridge.r"
+            },
+            {
+              "id": "level1.flip.walkover",
+              "name": "WALKOVER",
+              "aka": "Back and front walkover",
+              "legacyKey": "level1.flip.walk-over.r"
+            },
+            {
+              "id": "level1.flip.macaco",
+              "name": "MACACO",
+              "legacyKey": "level1.flip.macaco.l"
+            },
+            {
+              "id": "level1.flip.back-flack",
+              "name": "BACK FLACK",
+              "aka": "Back handspring, flic-flac",
+              "legacyKey": "level1.flip.back-flack.r"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "level2",
+      "numeral": "II",
+      "theme": {
+        "en": "Building blocks",
+        "lt": "Kertiniai elementai"
+      },
+      "families": [
+        {
+          "id": "kick",
+          "tricks": [
+            {
+              "id": "level2.kick.compasso",
+              "name": "COMPASSO",
+              "aka": "Meia lua de compasso",
+              "legacyKey": "level2.kick.compaso.l"
+            },
+            {
+              "id": "level2.kick.tornado",
+              "name": "TORNADO",
+              "legacyKey": "level2.kick.tornado.l"
+            },
+            {
+              "id": "level2.kick.palm",
+              "name": "PALM",
+              "aka": "Palm kick",
+              "legacyKey": "level2.kick.palm.l"
+            },
+            {
+              "id": "level2.kick.moon",
+              "name": "MOON",
+              "aka": "Moon kick",
+              "legacyKey": "level2.kick.moon.l"
+            },
+            {
+              "id": "level2.kick.pop-360",
+              "name": "POP 360",
+              "legacyKey": "level2.kick.pop360.r"
+            },
+            {
+              "id": "level2.kick.feilong",
+              "name": "FEILONG",
+              "legacyKey": "level2.kick.feilong.r"
+            },
+            {
+              "id": "level2.kick.au-batido",
+              "name": "AU BATIDO",
+              "aka": "Aú batido, L-kick",
+              "legacyKey": "level2.kick.au-batido.r"
+            },
+            {
+              "id": "level2.kick.flash",
+              "name": "FLASH",
+              "aka": "Flash kick",
+              "legacyKey": "level2.kick.flash.r"
+            }
+          ]
+        },
+        {
+          "id": "setup",
+          "tricks": [
+            {
+              "id": "level2.setup.j-step",
+              "name": "J-STEP",
+              "legacyKey": "level2.setup.j-step.l"
+            },
+            {
+              "id": "level2.setup.scoot",
+              "name": "SCOOT",
+              "legacyKey": "level2.setup.scoot.l"
+            },
+            {
+              "id": "level2.setup.vanish",
+              "name": "VANISH",
+              "legacyKey": "level2.setup.vanish.l"
+            },
+            {
+              "id": "level2.setup.transformer",
+              "name": "TRANSFORMER",
+              "aka": "Machine",
+              "legacyKey": "level2.setup.transformer.l"
+            },
+            {
+              "id": "level2.setup.pivot",
+              "name": "PIVOT",
+              "legacyKey": "level2.setup.pivot.r"
+            },
+            {
+              "id": "level2.setup.blasterscoot",
+              "name": "BLASTERSCOOT",
+              "aka": "Blaster scoot",
+              "legacyKey": "level2.setup.blasterscoot.r"
+            },
+            {
+              "id": "level2.setup.missleg",
+              "name": "MISSLEG",
+              "legacyKey": "level2.setup.missleg.r"
+            },
+            {
+              "id": "level2.setup.spyder",
+              "name": "SPYDER",
+              "aka": "Snowbubble",
+              "legacyKey": "level2.setup.spyder.r"
+            }
+          ]
+        },
+        {
+          "id": "flip",
+          "tricks": [
+            {
+              "id": "level2.flip.side",
+              "name": "SIDE",
+              "aka": "Side flip",
+              "legacyKey": "level2.flip.side.l"
+            },
+            {
+              "id": "level2.flip.front",
+              "name": "FRONT",
+              "aka": "Front tuck",
+              "legacyKey": "level2.flip.front.l"
+            },
+            {
+              "id": "level2.flip.back",
+              "name": "BACK",
+              "aka": "Back tuck, backflip",
+              "legacyKey": "level2.flip.back.l"
+            },
+            {
+              "id": "level2.flip.sailor-moon",
+              "name": "SAILOR MOON",
+              "legacyKey": "level2.flip.sailormoon.l"
+            },
+            {
+              "id": "level2.flip.raiz",
+              "name": "RAIZ",
+              "legacyKey": "level2.flip.raiz.r"
+            },
+            {
+              "id": "level2.flip.aerial",
+              "name": "AERIAL",
+              "legacyKey": "level2.flip.aerial.r"
+            },
+            {
+              "id": "level2.flip.cheat-gainer",
+              "name": "CHEAT GAINER",
+              "aka": "Slant gainer, gainer flash",
+              "legacyKey": "level2.flip.cheat-gainer.r"
+            },
+            {
+              "id": "level2.flip.spyder",
+              "name": "SPYDER",
+              "aka": "Snowbubble",
+              "legacyKey": "level2.flip.spyder.r"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "level3",
+      "numeral": "III",
+      "theme": {
+        "en": "Advanced moves",
+        "lt": "Pažangūs judesiai"
+      },
+      "families": [
+        {
+          "id": "setup",
+          "tricks": [
+            {
+              "id": "level3.setup.tdr",
+              "name": "TDR",
+              "aka": "Touchdown raiz",
+              "legacyKey": "level3.setup.tdr.l"
+            },
+            {
+              "id": "level3.setup.swing",
+              "name": "SWING",
+              "aka": "Swing-through",
+              "legacyKey": "level3.setup.swing.l"
+            },
+            {
+              "id": "level3.setup.valdez",
+              "name": "VALDEZ",
+              "legacyKey": "level3.setup.valdez.l"
+            },
+            {
+              "id": "level3.setup.masterscoot",
+              "name": "MASTERSCOOT",
+              "legacyKey": "level3.setup.masterscoot.l"
+            },
+            {
+              "id": "level3.setup.gumbi",
+              "name": "GUMBI",
+              "aka": "Gumby",
+              "legacyKey": "level3.setup.gumbi.r"
+            },
+            {
+              "id": "level3.setup.wrap",
+              "name": "WRAP",
+              "aka": "Wrap-through",
+              "legacyKey": "level3.setup.wrap.r"
+            },
+            {
+              "id": "level3.setup.rapid",
+              "name": "RAPID",
+              "legacyKey": "level3.setup.rapid.r"
+            },
+            {
+              "id": "level3.setup.envergado",
+              "name": "ENVERGADO",
+              "legacyKey": "level3.setup.envergado.r"
+            }
+          ]
+        },
+        {
+          "id": "flip",
+          "tricks": [
+            {
+              "id": "level3.flip.webster",
+              "name": "WEBSTER",
+              "aka": "Loser",
+              "legacyKey": "level3.flip.webster-looser.l"
+            },
+            {
+              "id": "level3.flip.gainer",
+              "name": "GAINER",
+              "legacyKey": "level3.flip.gainer.l"
+            },
+            {
+              "id": "level3.flip.arabian",
+              "name": "ARABIAN",
+              "legacyKey": "level3.flip.arabian.l"
+            },
+            {
+              "id": "level3.flip.tunnel",
+              "name": "TUNNEL",
+              "aka": "Tunnel flip",
+              "legacyKey": "level3.flip.tunnel.l"
+            },
+            {
+              "id": "level3.flip.helicoptero",
+              "name": "HELICOPTERO",
+              "aka": "Helicóptero",
+              "legacyKey": "level3.flip.helicoptero.r"
+            },
+            {
+              "id": "level3.flip.reversao",
+              "name": "REVERSAO",
+              "aka": "Reversão",
+              "legacyKey": "level3.flip.reversao.r"
+            },
+            {
+              "id": "level3.flip.lonestar",
+              "name": "LONESTAR",
+              "legacyKey": "level3.flip.lonestar.r"
+            },
+            {
+              "id": "level3.flip.dleg",
+              "name": "DLEG",
+              "aka": "Doubleleg, D-leg, armada dupla",
+              "legacyKey": "level3.flip.dleg.r"
+            }
+          ]
+        },
+        {
+          "id": "twist",
+          "tricks": [
+            {
+              "id": "level3.twist.a-twist",
+              "name": "A-TWIST",
+              "aka": "Aerial twist",
+              "legacyKey": "level3.twist.a-twist.l"
+            },
+            {
+              "id": "level3.twist.b-twist",
+              "name": "B-TWIST",
+              "aka": "Butterfly twist",
+              "legacyKey": "level3.twist.b-twist.l"
+            },
+            {
+              "id": "level3.twist.cork",
+              "name": "CORK",
+              "aka": "Corkscrew",
+              "legacyKey": "level3.twist.cork.l"
+            },
+            {
+              "id": "level3.twist.dleg-twist",
+              "name": "DLEG TWIST",
+              "aka": "Doubleleg twist",
+              "legacyKey": "level3.twist.dleg-twist.l"
+            },
+            {
+              "id": "level3.twist.cartfull",
+              "name": "CARTFULL",
+              "aka": "Cartwheel full",
+              "legacyKey": "level3.twist.cartfull.r"
+            },
+            {
+              "id": "level3.twist.backfull",
+              "name": "BACKFULL",
+              "aka": "Back full, full twist",
+              "legacyKey": "level3.twist.backfull.r"
+            },
+            {
+              "id": "level3.twist.side-twist",
+              "name": "SIDE TWIST",
+              "legacyKey": "level3.twist.side.r"
+            },
+            {
+              "id": "level3.twist.1990",
+              "name": "1990",
+              "aka": "Handspin",
+              "legacyKey": "level3.twist.1990.r"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "level4",
+      "numeral": "IV",
+      "theme": {
+        "en": "Doubles and pro tricks",
+        "lt": "Dvigubi ir profų triukai"
+      },
+      "families": [
+        {
+          "id": "kick",
+          "tricks": [
+            {
+              "id": "level4.kick.540",
+              "name": "540",
+              "aka": "540 kick",
+              "legacyKey": "level4.kick.540.l"
+            },
+            {
+              "id": "level4.kick.backside-720",
+              "name": "BACKSIDE 720",
+              "aka": "Backside 700",
+              "legacyKey": "level4.kick.backside700.l"
+            },
+            {
+              "id": "level4.kick.cheat-720-c7",
+              "name": "CHEAT 720 (C7)",
+              "aka": "Cheat 700",
+              "legacyKey": "level4.kick.cheat700-c7.l"
+            },
+            {
+              "id": "level4.kick.cheat-1080-c10",
+              "name": "CHEAT 1080 (C10)",
+              "legacyKey": "level4.kick.cheat1080-c10.l"
+            },
+            {
+              "id": "level4.kick.jackknife",
+              "name": "JACKKNIFE",
+              "aka": "Jacknife",
+              "legacyKey": "level4.kick.jacknife.r"
+            },
+            {
+              "id": "level4.kick.sideswipe",
+              "name": "SIDESWIPE",
+              "legacyKey": "level4.kick.sideswipe.r"
+            },
+            {
+              "id": "level4.kick.cheat-900-c9",
+              "name": "CHEAT 900 (C9)",
+              "legacyKey": "level4.kick.cheat900-c9.r"
+            },
+            {
+              "id": "level4.kick.cheat-1260-c12",
+              "name": "CHEAT 1260 (C12)",
+              "aka": "Cheat 1220",
+              "legacyKey": "level4.kick.cheat1220-c12.r"
+            }
+          ]
+        },
+        {
+          "id": "flip",
+          "tricks": [
+            {
+              "id": "level4.flip.dub-side",
+              "name": "DUB SIDE",
+              "aka": "Double side flip",
+              "legacyKey": "level4.flip.dub-side.l"
+            },
+            {
+              "id": "level4.flip.dub-back",
+              "name": "DUB BACK",
+              "aka": "Double back",
+              "legacyKey": "level4.flip.dub-back.l"
+            },
+            {
+              "id": "level4.flip.dub-front",
+              "name": "DUB FRONT",
+              "aka": "Double front",
+              "legacyKey": "level4.flip.dub-front.l"
+            },
+            {
+              "id": "level4.flip.dub-gainer",
+              "name": "DUB GAINER",
+              "aka": "Double gainer",
+              "legacyKey": "level4.flip.dub-gainer.l"
+            },
+            {
+              "id": "level4.flip.vortex",
+              "name": "VORTEX",
+              "legacyKey": "level4.flip.vortex.r"
+            },
+            {
+              "id": "level4.flip.dub-arabian",
+              "name": "DUB ARABIAN",
+              "aka": "Double Arabian",
+              "legacyKey": "level4.flip.dub-arabian.r"
+            },
+            {
+              "id": "level4.flip.fliffus",
+              "name": "FLIFFUS",
+              "aka": "Fliffus",
+              "legacyKey": "level4.flip.fliffus.r"
+            },
+            {
+              "id": "level4.flip.dub-tunnel",
+              "name": "DUB TUNNEL",
+              "aka": "Double tunnel flip",
+              "legacyKey": "level4.flip.dub-tunnel.r"
+            }
+          ]
+        },
+        {
+          "id": "twist",
+          "tricks": [
+            {
+              "id": "level4.twist.dub-a-twist",
+              "name": "DUB A-TWIST",
+              "aka": "Double aerial twist",
+              "legacyKey": "level4.twist.dub-a-twist.l"
+            },
+            {
+              "id": "level4.twist.dub-b-twist",
+              "name": "DUB B-TWIST",
+              "aka": "Double butterfly twist",
+              "legacyKey": "level4.twist.dub-b-twist.l"
+            },
+            {
+              "id": "level4.twist.dub-cork",
+              "name": "DUB CORK",
+              "aka": "Double cork",
+              "legacyKey": "level4.twist.dub-cork.l"
+            },
+            {
+              "id": "level4.twist.dub-dleg-twist",
+              "name": "DUB DLEG-TWIST",
+              "aka": "Double-leg double twist",
+              "legacyKey": "level4.twist.dub-dleg-twist.l"
+            },
+            {
+              "id": "level4.twist.dub-backfull",
+              "name": "DUB BACKFULL",
+              "aka": "Double full",
+              "legacyKey": "level4.twist.dub-backfull.r"
+            },
+            {
+              "id": "level4.twist.half-in",
+              "name": "HALF IN",
+              "aka": "Half-in half-out",
+              "legacyKey": "level4.twist.half-in.r"
+            },
+            {
+              "id": "level4.twist.full-in",
+              "name": "FULL IN",
+              "aka": "Full-in back-out",
+              "legacyKey": "level4.twist.full-in.r"
+            },
+            {
+              "id": "level4.twist.ramen-king",
+              "name": "RAMEN KING",
+              "legacyKey": "level4.twist.ramen-king.r"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variations": {
+    "id": "variations",
+    "families": [
+      {
+        "id": "shapes",
+        "tricks": [
+          {
+            "id": "variations.shapes.lay-stall",
+            "name": "LAY / STALL",
+            "legacyKey": "variations.x.lay-stall.l",
+            "aka": "Layout"
+          },
+          {
+            "id": "variations.shapes.pike",
+            "name": "PIKE",
+            "legacyKey": "variations.x.pike.l"
+          },
+          {
+            "id": "variations.shapes.x",
+            "name": "X",
+            "aka": "X-out",
+            "legacyKey": "variations.x.x.l"
+          },
+          {
+            "id": "variations.shapes.rodeo",
+            "name": "RODEO",
+            "legacyKey": "variations.x.rodeo.r"
+          },
+          {
+            "id": "variations.shapes.super-man",
+            "name": "SUPER MAN",
+            "aka": "Superman",
+            "legacyKey": "variations.x.super-man.r"
+          },
+          {
+            "id": "variations.shapes.rocket-boi",
+            "name": "ROCKET BOI",
+            "aka": "Rocketboi",
+            "legacyKey": "variations.x.rocket-boi.r"
+          },
+          {
+            "id": "variations.shapes.iron-man",
+            "name": "IRON MAN",
+            "aka": "Ironman",
+            "legacyKey": "variations.x.iron-man.r"
+          },
+          {
+            "id": "variations.shapes.spider-man",
+            "name": "SPIDER MAN",
+            "legacyKey": "variations.x.spyder-man.r"
+          },
+          {
+            "id": "variations.shapes.pistol",
+            "name": "PISTOL",
+            "legacyKey": "variations.x.pistol.r"
+          },
+          {
+            "id": "variations.shapes.donut-boi",
+            "name": "DONUT BOI",
+            "aka": "Donut boy",
+            "legacyKey": "variations.x.donut-boi.r"
+          },
+          {
+            "id": "variations.shapes.pizza-boi",
+            "name": "PIZZA BOI",
+            "aka": "Pizzaboy",
+            "legacyKey": "variations.x.pizza-boi.r"
+          }
+        ]
+      },
+      {
+        "id": "added-kicks",
+        "tricks": [
+          {
+            "id": "variations.added-kicks.flash",
+            "name": "FLASH",
+            "legacyKey": "variations.x.flash.l"
+          },
+          {
+            "id": "variations.added-kicks.round",
+            "name": "ROUND",
+            "legacyKey": "variations.x.round.l"
+          },
+          {
+            "id": "variations.added-kicks.shuriken",
+            "name": "SHURIKEN",
+            "legacyKey": "variations.x.shuriken.l"
+          },
+          {
+            "id": "variations.added-kicks.knife",
+            "name": "KNIFE",
+            "legacyKey": "variations.x.knife.l"
+          },
+          {
+            "id": "variations.added-kicks.feilong",
+            "name": "FEILONG",
+            "legacyKey": "variations.x.feilong.l"
+          },
+          {
+            "id": "variations.added-kicks.swipe",
+            "name": "SWIPE",
+            "legacyKey": "variations.x.swipe.r"
+          },
+          {
+            "id": "variations.added-kicks.scissor",
+            "name": "SCISSOR",
+            "legacyKey": "variations.x.scissor.r"
+          },
+          {
+            "id": "variations.added-kicks.dleg",
+            "name": "DLEG",
+            "aka": "Doubleleg",
+            "legacyKey": "variations.x.dleg.r"
+          },
+          {
+            "id": "variations.added-kicks.terada",
+            "name": "TERADA",
+            "aka": "Terada grab",
+            "legacyKey": "variations.x.terada.r"
+          },
+          {
+            "id": "variations.added-kicks.crowd-awakener",
+            "name": "CROWD AWAKENER",
+            "legacyKey": "variations.x.crowd-awakener.r"
+          },
+          {
+            "id": "variations.added-kicks.snapu",
+            "name": "SNAPU",
+            "aka": "Snapuswipe",
+            "legacyKey": "variations.x.snapu.r"
+          }
+        ]
+      },
+      {
+        "id": "rotation-timing",
+        "tricks": [
+          {
+            "id": "variations.rotation-timing.up",
+            "name": "UP",
+            "legacyKey": "variations.x.up.l"
+          },
+          {
+            "id": "variations.rotation-timing.down",
+            "name": "DOWN",
+            "legacyKey": "variations.x.down.r"
+          },
+          {
+            "id": "variations.rotation-timing.late9",
+            "name": "LATE9",
+            "legacyKey": "variations.x.late9.l"
+          },
+          {
+            "id": "variations.rotation-timing.gyro",
+            "name": "GYRO",
+            "legacyKey": "variations.x.gyro.l"
+          },
+          {
+            "id": "variations.rotation-timing.kyro",
+            "name": "KYRO",
+            "legacyKey": "variations.x.kyro.l"
+          },
+          {
+            "id": "variations.rotation-timing.in-out",
+            "name": "IN / OUT",
+            "legacyKey": "variations.x.in-out.l"
+          }
+        ]
+      },
+      {
+        "id": "landing",
+        "tricks": [
+          {
+            "id": "variations.landing.hyper",
+            "name": "HYPER",
+            "legacyKey": "variations.x.hyper.l"
+          },
+          {
+            "id": "variations.landing.switch",
+            "name": "SWITCH",
+            "legacyKey": "variations.x.switch.l"
+          }
+        ]
+      }
+    ]
+  }
+}
