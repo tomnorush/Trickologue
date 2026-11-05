@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Trickologue: Book + App</title>
-<meta name="description" content="The Trickologue book and app together: four levels, 96 tricks and 30 variations in order, and the board in your pocket.">
+<meta name="description" content="The Trickologue book and app together: four levels, 96 tricks and 30 variations in order, and the board in your pocket. In English and Lithuanian.">
 <style>
 /* Trickologue Gumroad page. Tokens from the Trickologue design system; dark is the brand's home, light follows the viewer's setting.
-   Layout: one column of sections on hairlines, a split hero (copy left, book + phone right), a centered night band to close. */
+   Layout: a training strip, one column of sections on hairlines, a split hero (copy left, book + phone right), a level quiz, a night band to close.
+   Languages: every piece of copy is written twice, <span lang="en"> and <span lang="lt">. The script sets html.is-lt; without it the page stays in English. */
 {{FONTS}}
 :root {
   --mat:#0a0a0b; --mat-raised:#141416; --line:#2e2b25; --line-ui:#6b675e; --ink:#f2f0ea; --ink-muted:#a39f95;
@@ -30,16 +31,22 @@
   }
 }
 
+/* Language: show one copy of every string. */
+html:not(.is-lt) body [lang="lt"], html.is-lt body [lang="en"] { display:none !important; }
+html:not(.js) .tq-js-only, html.js .tq-nojs-only { display:none !important; }
+[hidden] { display:none !important; }
+
 *, *::before, *::after { box-sizing:border-box; }
 html { background:var(--mat); scroll-padding-top:calc(var(--tq-nav-h) + 16px); -webkit-text-size-adjust:100%; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior:smooth; } }
-body { margin:0; background:var(--mat); color:var(--ink); font:400 16px/24px var(--font-sans); }
+body { margin:0; background:var(--mat); color:var(--ink); font:400 16px/24px var(--font-sans); overflow-x:hidden; }
 img { max-width:100%; height:auto; }
+button { font:inherit; color:inherit; }
 :focus-visible { outline:2px solid var(--focus); outline-offset:2px; }
 .sr { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
 .tq-skip { position:absolute; left:-999px; top:var(--space-2); z-index:100; padding:var(--space-2) var(--space-3); background:var(--gold); color:var(--on-gold); border-radius:var(--radius-sm); font:700 14px/1 var(--font-condensed); letter-spacing:.08em; text-transform:uppercase; text-decoration:none; }
 .tq-skip:focus { left:var(--space-2); }
-main:focus { outline:none; }
+main:focus, [tabindex="-1"]:focus { outline:none; }
 
 /* Frame */
 .tq-container { width:100%; max-width:var(--tq-web-max); margin:0 auto; padding-inline:var(--space-4); }
@@ -58,17 +65,25 @@ main:focus { outline:none; }
 .tq-tag { display:inline-block; padding:2px var(--space-2); border:1px solid var(--line); border-radius:var(--radius-sm); font:600 12px/16px var(--font-condensed); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-muted); }
 .tq-tag-gold { border-color:var(--gold-text); color:var(--gold-text); background:var(--gold-soft); }
 
+/* Training strip: the first thing on the page, booking in one tap */
+.tq-strip { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:0 var(--space-4); padding:0 var(--space-4); background:var(--gold-soft); border-bottom:1px solid var(--line); text-align:center; }
+.tq-strip-lead { font:600 12px/16px var(--font-condensed); letter-spacing:.12em; text-transform:uppercase; color:var(--ink); }
+.tq-strip-links { display:flex; flex-wrap:wrap; justify-content:center; gap:0 var(--space-4); }
+.tq-strip-link { display:inline-flex; align-items:center; gap:.35em; min-height:40px; color:var(--gold-text); font:700 13px/16px var(--font-condensed); letter-spacing:.1em; text-transform:uppercase; text-decoration:underline; text-underline-offset:.2em; text-decoration-thickness:1px; }
+.tq-strip-link:hover { color:var(--ink); }
+
 /* Logo */
 .tq-logo { display:inline-flex; align-items:center; gap:.4em; color:var(--gold-text); font:600 28px/1 var(--font-display); letter-spacing:.12em; text-transform:uppercase; text-decoration:none; }
 .tq-logo svg { width:1.3em; height:1.3em; flex:none; }
 .tq-logo-stacked { flex-direction:column; gap:.45em; }
 .tq-logo-stacked svg { width:2em; height:2em; }
 .tq-logo-ring .tq-ring-track { color:var(--line-ui); opacity:.55; }
-.tq-logo-ring .tq-ring-fill { stroke-dasharray:1; stroke-dashoffset:calc(1 - var(--scroll, 1)); }
+/* The script sets pathLength (Gumroad's sanitizer strips it) and adds .has-len; without it the ring shows full. */
+.tq-logo-ring .tq-ring-fill.has-len { stroke-dasharray:1; stroke-dashoffset:calc(1 - var(--scroll, 1)); }
 @media (prefers-reduced-motion: reduce) { .tq-logo-ring .tq-ring-fill { stroke-dashoffset:0; } }
 
 /* Buttons: one gold fill per screen */
-.tq-btn { display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2); min-height:44px; padding:0 var(--space-6); border-radius:var(--radius-md); border:1px solid var(--line-ui); background:transparent; color:var(--ink); font:700 15px/1 var(--font-condensed); letter-spacing:.08em; text-transform:uppercase; text-decoration:none; cursor:pointer; -webkit-appearance:none; appearance:none; }
+.tq-btn { display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2); min-height:44px; padding:0 var(--space-6); border-radius:var(--radius-md); border:1px solid var(--line-ui); background:transparent; color:var(--ink); font:700 15px/1 var(--font-condensed); letter-spacing:.08em; text-transform:uppercase; text-decoration:none; text-align:center; cursor:pointer; -webkit-appearance:none; appearance:none; }
 .tq-btn:hover { border-color:var(--gold-text); }
 .tq-btn:active { transform:translateY(1px); }
 .tq-btn-primary { background:var(--gold); border-color:var(--gold); color:var(--on-gold); }
@@ -76,21 +91,29 @@ main:focus { outline:none; }
 .tq-btn-lg { min-height:52px; padding:0 var(--space-8); font-size:17px; }
 .tq-btn .tq-btn-price { font-variant-numeric:tabular-nums; }
 .tq-btn .tq-btn-sep { opacity:.55; }
+.tq-btn .tq-btn-sub { color:var(--ink-muted); font-weight:600; }
 
 /* Nav */
-.tq-nav { position:sticky; top:env(safe-area-inset-top, 0px); z-index:20; display:flex; align-items:center; gap:var(--space-6); height:var(--tq-nav-h); padding-inline:var(--space-4); border-bottom:1px solid var(--line); background:var(--mat); }
+.tq-nav { position:sticky; top:env(safe-area-inset-top, 0px); z-index:20; display:flex; align-items:center; gap:var(--space-4); height:var(--tq-nav-h); padding-inline:var(--space-4); border-bottom:1px solid var(--line); background:var(--mat); }
 .tq-nav .tq-logo { font-size:18px; flex:none; min-height:44px; }
-.tq-nav-links { display:flex; align-items:center; gap:var(--space-6); margin:0 auto 0 var(--space-6); padding:0; list-style:none; }
-.tq-nav-link { display:inline-flex; align-items:center; min-height:44px; color:var(--ink-muted); font:600 13px/16px var(--font-condensed); letter-spacing:.12em; text-transform:uppercase; text-decoration:none; }
+.tq-nav-links { display:flex; align-items:center; gap:var(--space-6); margin:0 0 0 var(--space-4); padding:0; list-style:none; }
+.tq-nav-link { display:inline-flex; align-items:center; min-height:44px; color:var(--ink-muted); font:600 13px/16px var(--font-condensed); letter-spacing:.12em; text-transform:uppercase; text-decoration:none; white-space:nowrap; }
 .tq-nav-link:hover { color:var(--ink); }
 .tq-nav-link[aria-current="true"] { color:var(--ink); box-shadow:inset 0 -2px 0 var(--gold-text); }
-.tq-nav-cta { margin-left:auto; white-space:nowrap; }
+.tq-nav-end { display:flex; align-items:center; gap:var(--space-3); margin-left:auto; }
+.tq-nav-cta { white-space:nowrap; }
+.tq-lang { display:inline-flex; flex:none; border:1px solid var(--line-ui); border-radius:var(--radius-sm); overflow:hidden; }
+.tq-lang button { min-width:40px; min-height:36px; padding:0 var(--space-2); border:0; background:transparent; color:var(--ink-muted); font:700 13px/1 var(--font-condensed); letter-spacing:.12em; cursor:pointer; }
+.tq-lang button + button { border-left:1px solid var(--line-ui); }
+.tq-lang button:hover { color:var(--ink); }
+.tq-lang button[aria-pressed="true"] { background:var(--gold-soft); color:var(--gold-text); }
 
 /* Hero */
 .tq-hero { display:grid; grid-template-columns:minmax(0, 7fr) minmax(0, 5fr); gap:var(--space-12); align-items:center; padding-block:var(--space-12); }
 .tq-hero-copy { display:grid; gap:var(--space-6); justify-items:start; }
 .tq-hero-copy .tq-lead { font-size:18px; line-height:28px; }
 .tq-eyebrow { display:flex; flex-wrap:wrap; align-items:center; gap:var(--space-3); }
+.tq-byline { margin:calc(-1 * var(--space-2)) 0 0; color:var(--ink-muted); font:400 15px/22px var(--font-sans); }
 .tq-offer { display:grid; gap:var(--space-4); justify-items:start; width:100%; padding-top:var(--space-6); border-top:1px solid var(--line); }
 .tq-price { margin:0; display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--space-2) var(--space-4); }
 .tq-price-value { color:var(--gold-text); font:700 56px/1 var(--font-condensed); letter-spacing:-.01em; font-variant-numeric:tabular-nums; }
@@ -99,6 +122,14 @@ main:focus { outline:none; }
 .tq-trust { margin:0; padding:0; list-style:none; display:flex; flex-wrap:wrap; gap:var(--space-2) var(--space-6); color:var(--ink-muted); font:400 14px/20px var(--font-sans); }
 .tq-trust li { display:flex; gap:var(--space-2); }
 .tq-trust li::before { content:"\2713"; color:var(--gold-text); font-weight:800; }
+
+/* In-person training: two Calendly doors */
+.tq-train { display:grid; gap:var(--space-3); width:100%; padding:var(--space-4); border:1px solid var(--line); border-radius:var(--radius-md); background:var(--mat-raised); }
+.tq-train-head { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:var(--space-1) var(--space-3); }
+.tq-train-title { margin:0; color:var(--gold-text); font:600 14px/20px var(--font-display); letter-spacing:.14em; text-transform:uppercase; }
+.tq-train-actions { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:var(--space-3); }
+.tq-train-actions .tq-btn { flex-direction:column; gap:2px; min-height:56px; padding:var(--space-2) var(--space-4); }
+.tq-train-actions .tq-btn-sub { font:600 12px/16px var(--font-condensed); letter-spacing:.1em; }
 
 /* Book + phone: the two parts of the bundle, overlapping */
 .tq-duo { position:relative; width:100%; max-width:440px; justify-self:end; aspect-ratio:1 / 1; }
@@ -121,7 +152,49 @@ main:focus { outline:none; }
 .tq-features { margin:0; padding:0; list-style:none; display:grid; align-content:start; }
 .tq-features li { display:flex; gap:var(--space-3); padding:var(--space-2) 0; border-top:1px solid var(--line); }
 .tq-features li::before { content:"\2713"; flex:none; color:var(--gold-text); font:800 14px/24px var(--font-sans); }
+.tq-features b { color:var(--ink); font-weight:600; }
 .tq-parts-note { margin:var(--space-6) 0 0; max-width:65ch; }
+
+/* Level quiz */
+.tq-quiz-wrap { display:grid; gap:var(--space-8); align-items:start; }
+.tq-quiz { display:grid; gap:var(--space-6); padding:var(--space-6) var(--space-4); border:1px solid var(--line); border-top:2px solid var(--gold-text); border-radius:var(--radius-md); background:var(--mat-raised); min-width:0; }
+.tq-q-progress { display:flex; align-items:center; gap:var(--space-2); margin:0; padding:0; list-style:none; }
+.tq-q-progress li { display:flex; align-items:center; gap:var(--space-2); }
+.tq-q-progress li + li::before { content:""; width:16px; height:1px; background:var(--line-ui); }
+.tq-q-progress .tq-level { width:36px; height:36px; font-size:13px; opacity:.55; }
+.tq-q-progress .tq-level::before { -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2.5px)); mask:radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2.5px)); }
+.tq-q-progress [aria-current="step"] .tq-level, .tq-q-progress .is-seen .tq-level { opacity:1; }
+.tq-q-step { display:grid; gap:var(--space-4); }
+.tq-q-step-head { display:grid; gap:var(--space-1); }
+.tq-q-title { margin:0; font:600 18px/1.25 var(--font-display); letter-spacing:.12em; text-transform:uppercase; color:var(--gold-text); }
+.tq-chips { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:var(--space-2); }
+.tq-chip { display:flex; align-items:center; gap:var(--space-3); min-height:60px; padding:var(--space-2) var(--space-3); border:1px solid var(--line-ui); border-radius:var(--radius-md); background:transparent; text-align:left; cursor:pointer; min-width:0; }
+.tq-chip:hover { border-color:var(--gold-text); }
+.tq-chip-box { display:grid; place-items:center; flex:none; width:22px; height:22px; border:2px solid var(--ink-muted); border-radius:var(--radius-sm); color:transparent; font:800 14px/1 var(--font-sans); }
+.tq-chip-box::after { content:"\2713"; }
+.tq-chip-text { display:grid; gap:2px; min-width:0; }
+.tq-chip-name { color:var(--ink); font:700 16px/1.2 var(--font-condensed); letter-spacing:.06em; text-transform:uppercase; }
+.tq-chip-meta { color:var(--ink-muted); font:600 12px/16px var(--font-condensed); letter-spacing:.08em; }
+.tq-chip[aria-pressed="true"] { background:var(--gold-soft); border-color:var(--gold-text); }
+.tq-chip[aria-pressed="true"] .tq-chip-box { background:var(--gold); border-color:var(--gold-text); color:var(--on-gold); }
+.tq-q-foot { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:var(--space-3); padding-top:var(--space-4); border-top:1px solid var(--line); }
+.tq-q-foot .tq-label b { color:var(--gold-text); font-weight:700; }
+.tq-q-foot .tq-row { margin-left:auto; }
+#q-next .q-done, #q-next.is-done .q-up { display:none; }
+#q-next.is-done .q-done { display:inline; }
+.tq-q-result { display:grid; gap:var(--space-6); }
+.tq-q-res-head { display:flex; align-items:center; gap:var(--space-4); }
+.tq-q-var { display:grid; gap:var(--space-2); }
+.tq-q-var p { margin:0; }
+.tq-q-score { margin:0; color:var(--ink-muted); }
+.tq-q-score b { color:var(--ink); }
+.tq-q-rings { display:flex; flex-wrap:wrap; gap:var(--space-4); }
+.tq-q-rings > span { display:grid; justify-items:center; gap:var(--space-1); }
+.tq-q-rings .tq-level { width:44px; height:44px; font-size:15px; }
+.tq-q-next { display:grid; gap:var(--space-3); padding-top:var(--space-6); border-top:1px solid var(--line); }
+.tq-q-ctas { display:grid; gap:var(--space-3); }
+.tq-text-btn { justify-self:start; display:inline-flex; align-items:center; min-height:44px; padding:0; border:0; background:none; color:var(--ink-muted); font:600 12px/16px var(--font-condensed); letter-spacing:.12em; text-transform:uppercase; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+.tq-text-btn:hover { color:var(--gold-text); }
 
 /* Pillars */
 .tq-pillars { display:grid; grid-template-columns:3fr 2fr 2fr; grid-auto-rows:minmax(200px, auto); gap:var(--space-4); }
@@ -139,12 +212,13 @@ main:focus { outline:none; }
 .tq-pillar.is-night > :not(.tq-pillar-art) { position:relative; }
 
 /* Level ring */
-.tq-level { --p:0; position:relative; display:inline-grid; place-items:center; width:56px; height:56px; border-radius:var(--radius-round); color:var(--gold-text); font:600 18px/1 var(--font-display); letter-spacing:.04em; }
+.tq-level { --p:0; position:relative; display:inline-grid; place-items:center; flex:none; width:56px; height:56px; border-radius:var(--radius-round); color:var(--gold-text); font:600 18px/1 var(--font-display); letter-spacing:.04em; }
 .tq-level::before { content:""; position:absolute; inset:0; border-radius:inherit; background:conic-gradient(var(--gold-text) calc(var(--p) * 360deg), var(--line) 0); -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3.5px)); mask:radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3.5px)); }
 .tq-level.is-done { background:var(--gold); color:var(--on-gold); }
 .tq-level.tq-p-third { --p:0.34; }
 .tq-level.tq-p-two-thirds { --p:0.67; }
 .tq-level.is-done::before { display:none; }
+.tq-level.is-lg { width:88px; height:88px; font-size:28px; }
 
 /* Steps */
 .tq-steps { display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:var(--space-6); align-items:start; margin:0; padding:0; list-style:none; }
@@ -174,11 +248,16 @@ main:focus { outline:none; }
 .tq-level-col .tq-cue { margin-top:var(--space-2); }
 .tq-level-col .tq-cue p { font-size:15px; line-height:22px; }
 
-/* Coach */
+/* Authors */
 .tq-coach { display:grid; gap:var(--space-8); align-items:center; }
 .tq-coach-media { margin:0; display:grid; gap:var(--space-3); justify-items:start; max-width:420px; }
 .tq-coach-media img { display:block; width:100%; border:1px solid var(--line); border-radius:var(--radius-md); aspect-ratio:600 / 848; object-fit:cover; }
 .tq-coach-copy { display:grid; gap:var(--space-4); justify-items:start; }
+.tq-people { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:var(--space-3); width:100%; margin:0; padding:0; list-style:none; }
+.tq-person { display:grid; gap:2px; padding:var(--space-3) var(--space-4); border:1px solid var(--line); border-radius:var(--radius-md); background:var(--mat-raised); min-width:0; }
+.tq-person-name { font:600 15px/1.3 var(--font-display); letter-spacing:.08em; color:var(--ink); }
+.tq-person .tq-link { font:700 15px/24px var(--font-condensed); letter-spacing:.06em; overflow-wrap:anywhere; }
+.tq-coach-copy .tq-train { max-width:520px; }
 
 /* FAQ */
 .tq-faq { margin:0; padding:0; border-top:1px solid var(--line); max-width:65ch; }
@@ -199,10 +278,13 @@ main:focus { outline:none; }
 .tq-band .tq-price-terms, .tq-band .tq-small { color:var(--night-muted); }
 .tq-band .tq-price { justify-content:center; }
 .tq-band :focus-visible { outline-color:var(--night-gold); }
+.tq-band-train { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:var(--space-1) var(--space-4); margin:0; color:var(--night-muted); }
+.tq-band-train a { display:inline-flex; align-items:center; min-height:44px; color:var(--night-gold); font:700 14px/16px var(--font-condensed); letter-spacing:.1em; text-transform:uppercase; text-decoration:underline; text-underline-offset:.2em; }
+.tq-band-train a:hover { color:var(--day); }
 
 /* Footer */
 .tq-footer { border-top:1px solid var(--line); padding:var(--space-8) var(--space-4) var(--space-6); }
-.tq-footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:var(--space-8); max-width:var(--tq-web-max); margin:0 auto; }
+.tq-footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:var(--space-8); max-width:var(--tq-web-max); margin:0 auto; }
 .tq-footer .tq-logo { font-size:16px; }
 .tq-footer-blurb { margin:var(--space-3) 0 0; max-width:32ch; }
 .tq-footer-col { display:grid; gap:var(--space-2); align-content:start; margin:0; padding:0; list-style:none; }
@@ -212,7 +294,13 @@ main:focus { outline:none; }
 .tq-footer-legal { max-width:var(--tq-web-max); margin:var(--space-8) auto 0; padding-top:var(--space-4); border-top:1px solid var(--line); color:var(--ink-muted); font:400 13px/18px var(--font-sans); }
 
 /* Larger screens */
-@media (min-width: 640px) { .tq-levels { grid-template-columns:repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 640px) {
+  .tq-levels { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+  .tq-chips { grid-template-columns:repeat(3, minmax(0, 1fr)); }
+  .tq-q-ctas { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+  .tq-q-ctas .tq-btn-primary { grid-column:1 / -1; }
+  .tq-quiz { padding:var(--space-8); }
+}
 @media (min-width: 768px) {
   .tq-container { padding-inline:var(--space-6); }
   .tq-section { padding-block:var(--space-16); }
@@ -226,12 +314,14 @@ main:focus { outline:none; }
   .tq-section { padding-block:var(--space-24); }
   .tq-levels { grid-template-columns:repeat(4, minmax(0, 1fr)); gap:var(--space-4); }
   .tq-proof { padding-block:var(--space-8); }
+  .tq-quiz-wrap { grid-template-columns:minmax(0, 4fr) minmax(0, 7fr); gap:var(--space-12); }
+  .tq-quiz-wrap .tq-section-head { position:sticky; top:calc(var(--tq-nav-h) + var(--space-8)); margin-bottom:0; }
 }
 
-/* Phones: one column; the nav keeps the logo mark and the buy button */
+/* Tablets and phones: the nav keeps the logo, the language switch and the buy button */
+@media (max-width: 1079px) { .tq-nav-links { display:none; } }
 @media (max-width: 767px) {
   .tq-nav { gap:var(--space-3); }
-  .tq-nav-links { display:none; }
   .tq-nav .tq-logo { font-size:15px; }
   .tq-nav-cta { padding:0 var(--space-4); }
   .tq-hero { grid-template-columns:1fr; gap:var(--space-8); padding-block:var(--space-8) var(--space-12); }
@@ -248,36 +338,58 @@ main:focus { outline:none; }
   .tq-band .tq-btn { width:100%; max-width:360px; }
   .tq-footer-grid { grid-template-columns:1fr 1fr; }
   .tq-footer-grid > :first-child { grid-column:1 / -1; }
+  .tq-q-foot .tq-row { width:100%; }
+  .tq-q-foot .tq-row .tq-btn { flex:1 1 0; }
+}
+@media (max-width: 440px) {
+  .tq-nav .tq-logo > span { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  .tq-train-actions { grid-template-columns:1fr; }
+  .tq-people { grid-template-columns:1fr; }
 }
 
-/* Motion is rotation: the ring in the nav mark fills as you scroll. Everything else shows its end state. */
+/* Motion is rotation: the ring in the nav mark fills as you scroll, and quiz rings fill as you tick. Everything else shows its end state. */
 @media (prefers-reduced-motion: no-preference) {
-  .tq-btn { transition:border-color 150ms ease, transform 100ms ease; }
-  .tq-nav-link, .tq-link, .tq-footer-link, .tq-faq-q { transition:color 150ms ease; }
+  .tq-btn, .tq-chip { transition:border-color 150ms ease, background-color 150ms ease, transform 100ms ease; }
+  .tq-nav-link, .tq-link, .tq-footer-link, .tq-faq-q, .tq-strip-link, .tq-text-btn { transition:color 150ms ease; }
   .tq-faq-q::after { transition:transform 200ms var(--tq-ease-out), border-color 150ms ease; }
 }
-@media (forced-colors: active) { .tq-btn-primary { forced-color-adjust:none; } }
+@media (forced-colors: active) { .tq-btn-primary { forced-color-adjust:none; } .tq-chip[aria-pressed="true"] { outline:2px solid Highlight; } }
 </style>
 </head>
 <body>
-<a class="tq-skip" href="#main">Skip to content</a>
+<a class="tq-skip" href="#main"><span lang="en">Skip to content</span><span lang="lt">Pereiti prie turinio</span></a>
 
-<nav class="tq-nav" aria-label="Page">
-  <a class="tq-logo" href="#top" aria-label="Trickologue, back to top">
+<aside class="tq-strip" aria-labelledby="strip-title">
+  <span class="tq-strip-lead" id="strip-title"><span lang="en">Train with Tomas in Vilnius</span><span lang="lt">Treniruotės su Tomu Vilniuje</span></span>
+  <span class="tq-strip-links">
+    <a class="tq-strip-link" href="https://calendly.com/tomas-norusevicius/trickologue-group" target="_blank" rel="noopener"><span lang="en">Group training</span><span lang="lt">Grupinė treniruotė</span><span aria-hidden="true">&rarr;</span></a>
+    <a class="tq-strip-link" href="https://calendly.com/tomas-norusevicius/akro" target="_blank" rel="noopener"><span lang="en">Private session</span><span lang="lt">Individuali treniruotė</span><span aria-hidden="true">&rarr;</span></a>
+  </span>
+</aside>
+
+<nav class="tq-nav" id="nav" aria-label="Page">
+  <a class="tq-logo" href="#top" id="nav-logo" aria-label="Trickologue, back to top">
     <svg class="tq-logo-ring" viewBox="0 0 64 64" aria-hidden="true">
       <path class="tq-ring-track" d="M32.77 53.99A22 22 0 1 1 50.66 43.66" fill="none" stroke="currentColor" stroke-width="6"/>
-      <path class="tq-ring-fill" d="M32.77 53.99A22 22 0 1 1 50.66 43.66" fill="none" stroke="currentColor" stroke-width="6" pathLength="1"/>
+      <path class="tq-ring-fill" d="M32.77 53.99A22 22 0 1 1 50.66 43.66" fill="none" stroke="currentColor" stroke-width="6"/>
       <circle cx="43" cy="51.05" r="4" fill="currentColor"/>
     </svg>
     <span>Trickologue</span>
   </a>
   <ul class="tq-nav-links">
-    <li><a class="tq-nav-link" href="#inside">What's inside</a></li>
-    <li><a class="tq-nav-link" href="#curriculum">Levels</a></li>
-    <li><a class="tq-nav-link" href="#coach">Coach</a></li>
-    <li><a class="tq-nav-link" href="#faq">FAQ</a></li>
+    <li><a class="tq-nav-link" href="#inside"><span lang="en">What's inside</span><span lang="lt">Kas viduje</span></a></li>
+    <li><a class="tq-nav-link" href="#quiz"><span lang="en">Find your level</span><span lang="lt">Rask savo lygį</span></a></li>
+    <li><a class="tq-nav-link" href="#curriculum"><span lang="en">Levels</span><span lang="lt">Lygiai</span></a></li>
+    <li><a class="tq-nav-link" href="#authors"><span lang="en">Authors</span><span lang="lt">Autoriai</span></a></li>
+    <li><a class="tq-nav-link" href="#faq"><span lang="en">FAQ</span><span lang="lt">DUK</span></a></li>
   </ul>
-  <button type="button" class="tq-btn tq-nav-cta" id="nav-cta" data-gumroad-action="buy">Buy <span class="tq-btn-sep" aria-hidden="true">·</span> <span class="tq-btn-price" data-gumroad-field="price">€49</span></button>
+  <div class="tq-nav-end">
+    <div class="tq-lang tq-js-only" role="group" id="lang-switch" aria-label="Language">
+      <button type="button" id="lang-en" aria-pressed="true" title="English">EN</button>
+      <button type="button" id="lang-lt" aria-pressed="false" title="Lietuvių">LT</button>
+    </div>
+    <button type="button" class="tq-btn tq-nav-cta" id="nav-cta" data-gumroad-action="buy"><span lang="en">Buy</span><span lang="lt">Pirkti</span> <span class="tq-btn-sep" aria-hidden="true">·</span> <span class="tq-btn-price" data-gumroad-field="price">€49</span></button>
+  </div>
 </nav>
 
 <main id="main" tabindex="-1">
@@ -286,37 +398,49 @@ main:focus { outline:none; }
 <section class="tq-container tq-hero" aria-labelledby="hero-title">
   <div class="tq-hero-copy">
     <div class="tq-eyebrow">
-      <span class="tq-tag tq-tag-gold">Book + app</span>
+      <span class="tq-tag tq-tag-gold"><span lang="en">Book + app</span><span lang="lt">Knyga + programėlė</span></span>
       <p class="tq-label" data-gumroad-field="name">Trickologue: Book + App</p>
     </div>
-    <h1 class="tq-display-xl" id="hero-title">Every trick, in order.</h1>
-    <p class="tq-lead">The Trickologue book and the Trickologue app together. The book is the full progression system: four levels, 96 tricks and 30 variations. The app is the board you carry to training.</p>
+    <h1 class="tq-display-xl" id="hero-title"><span lang="en">Every trick, in order.</span><span lang="lt">Kiekvienas triukas&nbsp;– iš eilės.</span></h1>
+    <p class="tq-lead"><span lang="en">The Trickologue book and the Trickologue app together. The book is the full progression system: four levels, 96 tricks and 30 variations. The app is the board you carry to training.</span><span lang="lt">Trickologue knyga ir Trickologue programėlė kartu. Knyga&nbsp;– visa progresijos sistema: keturi lygiai, 96 triukai ir 30 variacijų. Programėlė&nbsp;– lenta, kurią nešiesi į treniruotę.</span></p>
+    <p class="tq-byline"><span lang="en">By Tomas Noruševičius and Šarūnas Pupelis</span><span lang="lt">Autoriai: Tomas Noruševičius ir Šarūnas Pupelis</span> (<a class="tq-link" href="https://www.instagram.com/trick3ris/" target="_blank" rel="noopener">@trick3ris</a>)</p>
     <div class="tq-offer">
-      <p class="tq-price"><span class="tq-price-value" data-gumroad-field="price">€49</span><span class="tq-price-terms">One payment · no subscription</span></p>
+      <p class="tq-price"><span class="tq-price-value" data-gumroad-field="price">€49</span><span class="tq-price-terms"><span lang="en">One payment · no subscription</span><span lang="lt">Vienas mokėjimas · jokios prenumeratos</span></span></p>
       <div class="tq-hero-actions">
-        <button type="button" class="tq-btn tq-btn-primary tq-btn-lg" id="hero-cta" data-gold-watch data-gumroad-action="buy">I want this</button>
-        <a class="tq-btn tq-btn-lg" href="#inside">See what's inside</a>
+        <button type="button" class="tq-btn tq-btn-primary tq-btn-lg tq-gold-watch" id="hero-cta" data-gumroad-action="buy"><span lang="en">I want this</span><span lang="lt">Noriu šito</span></button>
+        <a class="tq-btn tq-btn-lg" href="#quiz"><span lang="en">Find your level</span><span lang="lt">Rask savo lygį</span></a>
       </div>
       <ul class="tq-trust">
-        <li>Instant access by email</li>
-        <li>Costs less than buying both</li>
-        <li>EU VAT added at checkout</li>
+        <li><span lang="en">Instant access by email</span><span lang="lt">Prieiga iškart el. paštu</span></li>
+        <li><span lang="en">Costs less than buying both</span><span lang="lt">Pigiau nei perkant atskirai</span></li>
+        <li><span lang="en">EU VAT added at checkout</span><span lang="lt">ES PVM pridedamas atsiskaitant</span></li>
       </ul>
+      <div class="tq-train" id="hero-train">
+        <div class="tq-train-head">
+          <p class="tq-train-title"><span lang="en">Or train in person</span><span lang="lt">Arba treniruokis gyvai</span></p>
+          <p class="tq-label"><span lang="en">With Tomas · Vilnius</span><span lang="lt">Su Tomu · Vilniuje</span></p>
+        </div>
+        <div class="tq-train-actions">
+          <a class="tq-btn" href="https://calendly.com/tomas-norusevicius/trickologue-group" target="_blank" rel="noopener"><span lang="en">Group training</span><span lang="lt">Grupinė treniruotė</span><span class="tq-btn-sub"><span lang="en">Book in Calendly</span><span lang="lt">Registruokis Calendly</span></span></a>
+          <a class="tq-btn" href="https://calendly.com/tomas-norusevicius/akro" target="_blank" rel="noopener"><span lang="en">Private session</span><span lang="lt">Individuali treniruotė</span><span class="tq-btn-sub"><span lang="en">One-on-one</span><span lang="lt">Vienas su treneriu</span></span></a>
+        </div>
+      </div>
     </div>
   </div>
   <div class="tq-duo">
-    <img class="tq-duo-book" src="{{IMG_COVER}}" width="560" height="791" alt="The cover of the Trickologue book: The Tricking Progression System, Levels I to IV">
-    <img class="tq-duo-phone" src="{{IMG_PHONE}}" width="520" height="1125" alt="The Trickologue app on a phone, showing the Level I board of kicks, setups and flips">
+    <img class="tq-duo-book" id="img-cover" src="{{IMG_COVER}}" width="560" height="791" alt="The cover of the Trickologue book: The Tricking Progression System, Levels I to IV">
+    <img class="tq-duo-phone" id="img-phone" src="{{IMG_PHONE}}" width="520" height="1125" alt="The Trickologue app on a phone, showing the Level I board of kicks, setups and flips">
   </div>
 </section>
 
-<section class="tq-section tq-proof" aria-label="The system in numbers">
+<section class="tq-section tq-proof" aria-labelledby="proof-title">
+  <h2 class="sr" id="proof-title"><span lang="en">The system in numbers</span><span lang="lt">Sistema skaičiais</span></h2>
   <div class="tq-container">
     <ul class="tq-stats" role="list">
-      <li class="tq-stat"><span class="tq-stat-value">4</span><span class="tq-label">Levels</span></li>
-      <li class="tq-stat"><span class="tq-stat-value">96</span><span class="tq-label">Tricks in order</span></li>
-      <li class="tq-stat"><span class="tq-stat-value">30</span><span class="tq-label">Variations</span></li>
-      <li class="tq-stat"><span class="tq-stat-value">60</span><span class="tq-label">Pages</span></li>
+      <li class="tq-stat"><span class="tq-stat-value">4</span><span class="tq-label"><span lang="en">Levels</span><span lang="lt">Lygiai</span></span></li>
+      <li class="tq-stat"><span class="tq-stat-value">96</span><span class="tq-label"><span lang="en">Tricks in order</span><span lang="lt">Triukai iš eilės</span></span></li>
+      <li class="tq-stat"><span class="tq-stat-value">30</span><span class="tq-label"><span lang="en">Variations</span><span lang="lt">Variacijų</span></span></li>
+      <li class="tq-stat"><span class="tq-stat-value">60</span><span class="tq-label"><span lang="en">Pages</span><span lang="lt">Puslapių</span></span></li>
     </ul>
   </div>
 </section>
@@ -324,62 +448,206 @@ main:focus { outline:none; }
 <section class="tq-section" id="inside" aria-labelledby="inside-title">
   <div class="tq-container">
     <div class="tq-section-head">
-      <h2 class="tq-heading" id="inside-title">Two parts, one system.</h2>
-      <p class="tq-lead">Read the level in the book. Tick it off in the app. Both use the same trick names and the same order, so you always know where you are.</p>
+      <h2 class="tq-heading" id="inside-title"><span lang="en">Two parts, one system.</span><span lang="lt">Dvi dalys, viena sistema.</span></h2>
+      <p class="tq-lead"><span lang="en">Read the level in the book. Tick it off in the app. Both use the same trick names and the same order, so you always know where you are.</span><span lang="lt">Lygį perskaityk knygoje, pažymėk programėlėje. Abiejose&nbsp;– tie patys triukų pavadinimai ir ta pati tvarka, tad visada žinai, kur esi.</span></p>
     </div>
     <div class="tq-parts">
       <article class="tq-part">
         <div class="tq-part-head">
-          <h3 class="tq-part-name">The book</h3>
-          <p class="tq-part-sub">Trickologue, The Tricking Progression System. A 60-page PDF to download and keep.</p>
+          <h3 class="tq-part-name"><span lang="en">The book</span><span lang="lt">Knyga</span></h3>
+          <p class="tq-part-sub"><span lang="en">Trickologue, The Tricking Progression System. A 60-page PDF in English to download and keep.</span><span lang="lt">Trickologue, The Tricking Progression System. 60 puslapių PDF anglų kalba&nbsp;– atsisiunti ir pasilieki.</span></p>
         </div>
         <ul class="tq-features">
-          <li>The four level boards: 96 tricks, from your first hook kick to a double cork</li>
-          <li>A plain-language description and a coach's cue for every trick</li>
-          <li>30 variations, combos and training plans</li>
-          <li>Warm-up, flexibility, conditioning, mindset and the art of falling</li>
+          <li><span lang="en">The four level boards: 96 tricks, from your first hook kick to a double cork</span><span lang="lt">Keturios lygių lentos: 96 triukai&nbsp;– nuo pirmo hook spyrio iki dvigubo cork</span></li>
+          <li><span lang="en">A plain-language description and a coach's cue for every trick</span><span lang="lt">Kiekvienam triukui&nbsp;– aiškus aprašymas ir trenerio užuomina</span></li>
+          <li><span lang="en">30 variations, combos and training plans</span><span lang="lt">30 variacijų, kombinacijos ir treniruočių planai</span></li>
+          <li><span lang="en">Warm-up, flexibility, conditioning, mindset and the art of falling</span><span lang="lt">Apšilimas, lankstumas, fizinis pasirengimas, mąstysena ir kritimo menas</span></li>
         </ul>
       </article>
       <article class="tq-part">
         <div class="tq-part-head">
-          <h3 class="tq-part-name">The app</h3>
-          <p class="tq-part-sub">The Trickologue progression tracker. The book's level boards on your phone.</p>
+          <h3 class="tq-part-name"><span lang="en">The app</span><span lang="lt">Programėlė</span></h3>
+          <p class="tq-part-sub"><span lang="en">The Trickologue progression tracker. The book's level boards on your phone.</span><span lang="lt">Trickologue pažangos sekimas. Knygos lygių lentos tavo telefone.</span></p>
         </div>
         <ul class="tq-features">
-          <li>All four boards and the 30 variations, tickable</li>
-          <li>Your progress across all 126 tricks and variations at a glance</li>
-          <li>The book's coaching reminders in your pocket</li>
-          <li>Works offline, no login; progress stays on your device</li>
+          <li><span lang="en">All four boards and the 30 variations, tickable</span><span lang="lt">Visos keturios lentos ir 30 variacijų&nbsp;– žymi varnele</span></li>
+          <li><span lang="en">Your progress across all 126 tricks and variations at a glance</span><span lang="lt">Pažanga per visus 126 triukus ir variacijas&nbsp;– vienu žvilgsniu</span></li>
+          <li><span lang="en">The book's coaching reminders in your pocket</span><span lang="lt">Knygos trenerio priminimai kišenėje</span></li>
+          <li><span lang="en"><b>In any phone's browser:</b> no login, progress stays on your device</span><span lang="lt"><b>Bet kurio telefono naršyklėje:</b> be prisijungimo, pažanga lieka tavo įrenginyje</span></li>
+          <li><span lang="en"><b>On iPhone, with Scriptable:</b> home- and lock-screen widgets with your next trick, English or Lithuanian, progress saved to iCloud Drive</span><span lang="lt"><b>iPhone, su Scriptable:</b> valdikliai pagrindiniame ir užrakinimo ekrane su tavo kitu triuku, anglų arba lietuvių kalba, pažanga saugoma iCloud Drive</span></li>
         </ul>
       </article>
     </div>
-    <p class="tq-small tq-parts-note">Only want one part? Get <a class="tq-link" href="https://tomnorush.gumroad.com/l/trickologue">the book</a> or <a class="tq-link" href="https://tomnorush.gumroad.com/l/oxdvv">the app</a> on its own.</p>
+    <p class="tq-small tq-parts-note"><span lang="en">Only want one part? Get <a class="tq-link" href="https://tomnorush.gumroad.com/l/trickologue">the book</a> or <a class="tq-link" href="https://tomnorush.gumroad.com/l/oxdvv">the app</a> on its own.</span><span lang="lt">Reikia tik vienos dalies? Atskirai įsigyk <a class="tq-link" href="https://tomnorush.gumroad.com/l/trickologue">knygą</a> arba <a class="tq-link" href="https://tomnorush.gumroad.com/l/oxdvv">programėlę</a>.</span></p>
+  </div>
+</section>
+
+<section class="tq-section" id="quiz" aria-labelledby="quiz-title">
+  <div class="tq-container tq-quiz-wrap">
+    <div class="tq-section-head">
+      <p class="tq-label"><span lang="en">Level quiz · one minute</span><span lang="lt">Lygio testas · viena minutė</span></p>
+      <h2 class="tq-heading" id="quiz-title"><span lang="en">Find your level.</span><span lang="lt">Rask savo lygį.</span></h2>
+      <p class="tq-lead"><span lang="en">Tick the tricks you already land clean, controlled and five times in a row, without a spotter. That's the book's mastery rule. Five of six moves you up a level.</span><span lang="lt">Pažymėk triukus, kuriuos jau atlieki švariai, kontroliuojamai ir penkis kartus iš eilės, be draudžiančiojo. Tai knygos meistriškumo taisyklė. Penki iš šešių&nbsp;– ir keli lygiu aukščiau.</span></p>
+    </div>
+
+    <div class="tq-quiz tq-nojs-only">
+      <p class="tq-prose"><span lang="en">New to tricking? Start at Level I. Already training? The book's level boards show you where you stand, and Tomas can place you in person.</span><span lang="lt">Trikingas tau naujas? Pradėk nuo I lygio. Jau treniruojiesi? Knygos lygių lentos parodys, kur esi, o Tomas gali įvertinti gyvai.</span></p>
+      <div class="tq-q-ctas">
+        <a class="tq-btn" href="https://calendly.com/tomas-norusevicius/trickologue-group" target="_blank" rel="noopener"><span lang="en">Join a group training</span><span lang="lt">Prisijunk prie grupinės treniruotės</span></a>
+        <a class="tq-btn" href="https://calendly.com/tomas-norusevicius/akro" target="_blank" rel="noopener"><span lang="en">Book a private session</span><span lang="lt">Registruokis į individualią treniruotę</span></a>
+      </div>
+    </div>
+
+    <div class="tq-quiz tq-js-only" id="quiz-card">
+      <ol class="tq-q-progress" id="q-progress" aria-label="Quiz progress">
+        <li aria-current="step"><span class="tq-level" aria-hidden="true">I</span><span class="sr"><span lang="en">Level I</span><span lang="lt">I lygis</span></span></li>
+        <li><span class="tq-level" aria-hidden="true">II</span><span class="sr"><span lang="en">Level II</span><span lang="lt">II lygis</span></span></li>
+        <li><span class="tq-level" aria-hidden="true">III</span><span class="sr"><span lang="en">Level III</span><span lang="lt">III lygis</span></span></li>
+        <li><span class="tq-level" aria-hidden="true">IV</span><span class="sr"><span lang="en">Level IV</span><span lang="lt">IV lygis</span></span></li>
+      </ol>
+
+      <div class="tq-q-step" id="q-step-1" role="group" aria-labelledby="q-step-1-title">
+        <div class="tq-q-step-head">
+          <h3 class="tq-q-title" id="q-step-1-title" tabindex="-1"><span lang="en">Level I · Foundations</span><span lang="lt">I lygis · Pagrindai</span></h3>
+          <p class="tq-small"><span lang="en">Body control, basic kicks and ground acrobatics.</span><span lang="lt">Kūno kontrolė, baziniai spyriai ir akrobatika ant žemės.</span></p>
+        </div>
+        <div class="tq-chips">
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Hook</span><span class="tq-chip-meta"><span lang="en">Kick</span><span lang="lt">Spyris</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Butterfly</span><span class="tq-chip-meta"><span lang="en">Kick</span><span lang="lt">Spyris</span> · B-kick</span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Cartwheel</span><span class="tq-chip-meta"><span lang="en">Setup</span><span lang="lt">Įėjimas</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Round off</span><span class="tq-chip-meta"><span lang="en">Setup</span><span lang="lt">Įėjimas</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Walkover</span><span class="tq-chip-meta"><span lang="en">Flip</span><span lang="lt">Salto</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Back flack</span><span class="tq-chip-meta"><span lang="en">Flip</span><span lang="lt">Salto</span> · Back handspring</span></span></button>
+        </div>
+      </div>
+
+      <div class="tq-q-step" id="q-step-2" role="group" aria-labelledby="q-step-2-title" hidden>
+        <div class="tq-q-step-head">
+          <h3 class="tq-q-title" id="q-step-2-title" tabindex="-1"><span lang="en">Level II · Building blocks</span><span lang="lt">II lygis · Kertiniai elementai</span></h3>
+          <p class="tq-small"><span lang="en">Spinning kicks, capoeira kicks and the first aerial flips.</span><span lang="lt">Sukamieji spyriai, capoeiros spyriai ir pirmieji salto ore.</span></p>
+        </div>
+        <div class="tq-chips">
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Tornado</span><span class="tq-chip-meta"><span lang="en">Kick</span><span lang="lt">Spyris</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Pop 360</span><span class="tq-chip-meta"><span lang="en">Kick</span><span lang="lt">Spyris</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">J-step</span><span class="tq-chip-meta"><span lang="en">Setup</span><span lang="lt">Įėjimas</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Vanish</span><span class="tq-chip-meta"><span lang="en">Setup</span><span lang="lt">Įėjimas</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Aerial</span><span class="tq-chip-meta"><span lang="en">Flip</span><span lang="lt">Salto</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Back</span><span class="tq-chip-meta"><span lang="en">Flip</span><span lang="lt">Salto</span> · Backflip</span></span></button>
+        </div>
+      </div>
+
+      <div class="tq-q-step" id="q-step-3" role="group" aria-labelledby="q-step-3-title" hidden>
+        <div class="tq-q-step-head">
+          <h3 class="tq-q-title" id="q-step-3-title" tabindex="-1"><span lang="en">Level III · Advanced moves</span><span lang="lt">III lygis · Pažangūs judesiai</span></h3>
+          <p class="tq-small"><span lang="en">Swings, gainers and the first twists.</span><span lang="lt">Swing, gainer ir pirmieji sukiniai.</span></p>
+        </div>
+        <div class="tq-chips">
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Swing</span><span class="tq-chip-meta"><span lang="en">Setup</span><span lang="lt">Įėjimas</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Wrap</span><span class="tq-chip-meta"><span lang="en">Setup</span><span lang="lt">Įėjimas</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Gainer</span><span class="tq-chip-meta"><span lang="en">Flip</span><span lang="lt">Salto</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Webster</span><span class="tq-chip-meta"><span lang="en">Flip</span><span lang="lt">Salto</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Cork</span><span class="tq-chip-meta"><span lang="en">Twist</span><span lang="lt">Sukinys</span> · Corkscrew</span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">B-twist</span><span class="tq-chip-meta"><span lang="en">Twist</span><span lang="lt">Sukinys</span></span></span></button>
+        </div>
+      </div>
+
+      <div class="tq-q-step" id="q-step-4" role="group" aria-labelledby="q-step-4-title" hidden>
+        <div class="tq-q-step-head">
+          <h3 class="tq-q-title" id="q-step-4-title" tabindex="-1"><span lang="en">Level IV · Doubles and pro tricks</span><span lang="lt">IV lygis · Dvigubi ir profų triukai</span></h3>
+          <p class="tq-small"><span lang="en">Big cheat kicks, double flips and double twists.</span><span lang="lt">Dideli cheat spyriai, dvigubi salto ir dvigubi sukiniai.</span></p>
+        </div>
+        <div class="tq-chips">
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">540</span><span class="tq-chip-meta"><span lang="en">Kick</span><span lang="lt">Spyris</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Cheat 720 (C7)</span><span class="tq-chip-meta"><span lang="en">Kick</span><span lang="lt">Spyris</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Dub side</span><span class="tq-chip-meta"><span lang="en">Flip</span><span lang="lt">Salto</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Dub back</span><span class="tq-chip-meta"><span lang="en">Flip</span><span lang="lt">Salto</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Dub cork</span><span class="tq-chip-meta"><span lang="en">Twist</span><span lang="lt">Sukinys</span></span></span></button>
+          <button type="button" class="tq-chip" aria-pressed="false"><span class="tq-chip-box" aria-hidden="true"></span><span class="tq-chip-text"><span class="tq-chip-name">Full in</span><span class="tq-chip-meta"><span lang="en">Twist</span><span lang="lt">Sukinys</span></span></span></button>
+        </div>
+      </div>
+
+      <div class="tq-q-foot" id="q-foot">
+        <p class="tq-label"><span lang="en"><b class="q-count">0</b> of 6 ticked</span><span lang="lt">Pažymėta <b class="q-count">0</b> iš 6</span></p>
+        <div class="tq-row">
+          <button type="button" class="tq-btn" id="q-back" hidden><span lang="en">Back</span><span lang="lt">Atgal</span></button>
+          <button type="button" class="tq-btn tq-btn-primary tq-gold-watch" id="q-next"><span class="q-up"><span lang="en">Next level</span><span lang="lt">Kitas lygis</span></span><span class="q-done"><span lang="en">See my level</span><span lang="lt">Rodyti mano lygį</span></span></button>
+        </div>
+      </div>
+
+      <div class="tq-q-result" id="q-result" hidden>
+        <div class="tq-q-res-head">
+          <span class="tq-level is-lg" id="q-res-ring" aria-hidden="true">I</span>
+          <div class="tq-q-var" id="q-var-0" hidden>
+            <p class="tq-label"><span lang="en">Your level · Foundations</span><span lang="lt">Tavo lygis · Pagrindai</span></p>
+            <h3 class="tq-heading" tabindex="-1"><span lang="en">Start at Level I.</span><span lang="lt">Pradėk nuo I lygio.</span></h3>
+          </div>
+          <div class="tq-q-var" id="q-var-1" hidden>
+            <p class="tq-label"><span lang="en">Your level · Building blocks</span><span lang="lt">Tavo lygis · Kertiniai elementai</span></p>
+            <h3 class="tq-heading" tabindex="-1"><span lang="en">Start at Level II.</span><span lang="lt">Pradėk nuo II lygio.</span></h3>
+          </div>
+          <div class="tq-q-var" id="q-var-2" hidden>
+            <p class="tq-label"><span lang="en">Your level · Advanced moves</span><span lang="lt">Tavo lygis · Pažangūs judesiai</span></p>
+            <h3 class="tq-heading" tabindex="-1"><span lang="en">Start at Level III.</span><span lang="lt">Pradėk nuo III lygio.</span></h3>
+          </div>
+          <div class="tq-q-var" id="q-var-3" hidden>
+            <p class="tq-label"><span lang="en">Your level · Doubles and pro tricks</span><span lang="lt">Tavo lygis · Dvigubi ir profų triukai</span></p>
+            <h3 class="tq-heading" tabindex="-1"><span lang="en">Start at Level IV.</span><span lang="lt">Pradėk nuo IV lygio.</span></h3>
+          </div>
+          <div class="tq-q-var" id="q-var-4" hidden>
+            <p class="tq-label"><span lang="en">Your level · The limitless layer</span><span lang="lt">Tavo lygis · Beribis sluoksnis</span></p>
+            <h3 class="tq-heading" tabindex="-1"><span lang="en">Go for the variations.</span><span lang="lt">Imkis variacijų.</span></h3>
+          </div>
+        </div>
+        <p class="tq-prose q-body" id="q-body-0" hidden><span lang="en">Body control, basic kicks and ground acrobatics. Everything later stands on these 24 tricks, so train the kicks, setups and flips side by side.</span><span lang="lt">Kūno kontrolė, baziniai spyriai ir akrobatika ant žemės. Ant šių 24 triukų stovi visa kita, tad spyrius, įėjimus ir salto treniruok kartu.</span></p>
+        <p class="tq-prose q-body" id="q-body-1" hidden><span lang="en">Spinning kicks, capoeira kicks and the first aerial flips. Your base is there. Now build the blocks every bigger trick is made of.</span><span lang="lt">Sukamieji spyriai, capoeiros spyriai ir pirmieji salto ore. Pagrindą jau turi&nbsp;– dabar statyk elementus, iš kurių sudėti visi didesni triukai.</span></p>
+        <p class="tq-prose q-body" id="q-body-2" hidden><span lang="en">Swings, gainers and the first twists. Every new flip and twist starts on a trampoline, air track or foam pit, then moves down the surface ladder.</span><span lang="lt">Swing, gainer ir pirmieji sukiniai. Kiekvienas naujas salto ir sukinys pradedamas ant batuto, oro takelio ar porolono duobės, o tik tada pereina ant kietesnio pagrindo.</span></p>
+        <p class="tq-prose q-body" id="q-body-3" hidden><span lang="en">Big cheat kicks, double flips and double twists. Every double starts on soft ground under qualified coaching. Doubles take years, not weeks.</span><span lang="lt">Dideli cheat spyriai, dvigubi salto ir dvigubi sukiniai. Kiekvienas dvigubas triukas pradedamas ant minkšto pagrindo, prižiūrint kvalifikuotam treneriui. Dvigubi triukai užtrunka metus, ne savaites.</span></p>
+        <p class="tq-prose q-body" id="q-body-4" hidden><span lang="en">You land most of Level IV. There is no Level V: what's left is 30 variations, combos and your own style. The levels are finite. The variations are not.</span><span lang="lt">Didžiąją IV lygio dalį jau atlieki. V lygio nėra: lieka 30 variacijų, kombinacijos ir tavo paties stilius. Lygių skaičius baigtinis. Variacijų&nbsp;– ne.</span></p>
+        <p class="tq-q-score" id="q-score"><span lang="en">You ticked <b class="q-n">0</b> of 6 Level <b class="q-lv">I</b> tricks.</span><span lang="lt">Pažymėjai <b class="q-n">0</b> iš 6 <b class="q-lv">I</b> lygio triukų.</span></p>
+        <div class="tq-q-rings" aria-hidden="true">
+          <span><span class="tq-level q-ring">I</span><span class="tq-label q-ring-n">–</span></span>
+          <span><span class="tq-level q-ring">II</span><span class="tq-label q-ring-n">–</span></span>
+          <span><span class="tq-level q-ring">III</span><span class="tq-label q-ring-n">–</span></span>
+          <span><span class="tq-level q-ring">IV</span><span class="tq-label q-ring-n">–</span></span>
+        </div>
+        <div class="tq-q-next">
+          <p class="tq-label"><span lang="en">Your next step</span><span lang="lt">Tavo kitas žingsnis</span></p>
+          <div class="tq-q-ctas">
+            <button type="button" class="tq-btn tq-btn-primary tq-btn-lg tq-gold-watch" id="q-buy" data-gumroad-action="buy"><span lang="en">Get the book + app</span><span lang="lt">Įsigyk knygą + programėlę</span> <span class="tq-btn-sep" aria-hidden="true">·</span> <span class="tq-btn-price" data-gumroad-field="price">€49</span></button>
+            <a class="tq-btn tq-btn-lg" href="https://calendly.com/tomas-norusevicius/trickologue-group" target="_blank" rel="noopener"><span lang="en">Join a group training</span><span lang="lt">Grupinė treniruotė</span></a>
+            <a class="tq-btn tq-btn-lg" href="https://calendly.com/tomas-norusevicius/akro" target="_blank" rel="noopener"><span lang="en">Book a private session</span><span lang="lt">Individuali treniruotė</span></a>
+          </div>
+          <p class="tq-small"><span lang="en">Trainings with Tomas in Vilnius. Pick a time in Calendly; new flips are learned on soft ground with a spotter.</span><span lang="lt">Treniruotės su Tomu Vilniuje. Laiką išsirink Calendly; nauji salto mokomi ant minkšto pagrindo su draudžiančiuoju.</span></p>
+        </div>
+        <button type="button" class="tq-text-btn" id="q-restart"><span lang="en">Take the quiz again</span><span lang="lt">Pradėti testą iš naujo</span></button>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="tq-section" id="pillars" aria-labelledby="pillars-title">
   <div class="tq-container">
     <div class="tq-section-head">
-      <h2 class="tq-heading" id="pillars-title">What sits under the tricks.</h2>
-      <p class="tq-lead">Four things the book teaches before and between the flips. Every trick is built twice: once in the head and once in the body.</p>
+      <h2 class="tq-heading" id="pillars-title"><span lang="en">What sits under the tricks.</span><span lang="lt">Kas slypi po triukais.</span></h2>
+      <p class="tq-lead"><span lang="en">Four things the book teaches before and between the flips. Every trick is built twice: once in the head and once in the body.</span><span lang="lt">Keturi dalykai, kurių knyga moko prieš salto ir tarp jų. Kiekvienas triukas statomas du kartus: pirma galvoje, tada kūne.</span></p>
     </div>
     <div class="tq-pillars">
       <article class="tq-pillar is-tall is-night">
         <div class="tq-pillar-art" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M32.77 53.99A22 22 0 1 1 50.66 43.66" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="43" cy="51.05" r="4" fill="currentColor"/></svg></div>
-        <h3 class="tq-pillar-title">The Art of Falling</h3>
-        <p class="tq-pillar-line">Learn to <strong>fall</strong> before you learn to flip. Spread the impact, tuck the chin, never catch yourself on straight arms.</p>
+        <h3 class="tq-pillar-title"><span lang="en">The Art of Falling</span><span lang="lt">Kritimo menas</span></h3>
+        <p class="tq-pillar-line"><span lang="en">Learn to <strong>fall</strong> before you learn to flip. Spread the impact, tuck the chin, never catch yourself on straight arms.</span><span lang="lt">Pirma išmok <strong>kristi</strong>, tik tada&nbsp;– daryti salto. Paskirstyk smūgį, prispausk smakrą, niekada nesigaudyk tiesiomis rankomis.</span></p>
       </article>
       <article class="tq-pillar">
-        <h3 class="tq-pillar-title">Basics</h3>
-        <p class="tq-pillar-line">A messy basic becomes a ceiling. Eyes on the target, <strong>extend</strong> your toes on every kick.</p>
+        <h3 class="tq-pillar-title"><span lang="en">Basics</span><span lang="lt">Pagrindai</span></h3>
+        <p class="tq-pillar-line"><span lang="en">A messy basic becomes a ceiling. Eyes on the target, <strong>extend</strong> your toes on every kick.</span><span lang="lt">Netvarkingas pagrindas tampa lubomis. Akys į taikinį, per kiekvieną spyrį <strong>ištempk</strong> pėdą.</span></p>
       </article>
       <article class="tq-pillar">
-        <h3 class="tq-pillar-title">Discipline</h3>
-        <p class="tq-pillar-line">Three focused sessions a week beat one heroic one. <strong>Film</strong> every session so you can see what to fix.</p>
+        <h3 class="tq-pillar-title"><span lang="en">Discipline</span><span lang="lt">Disciplina</span></h3>
+        <p class="tq-pillar-line"><span lang="en">Three focused sessions a week beat one heroic one. <strong>Film</strong> every session so you can see what to fix.</span><span lang="lt">Trys susikaupusios treniruotės per savaitę geriau nei viena didvyriška. <strong>Filmuok</strong> kiekvieną treniruotę, kad matytum, ką taisyti.</span></p>
       </article>
       <article class="tq-pillar is-wide is-tint">
-        <h3 class="tq-pillar-title">Fear</h3>
-        <p class="tq-pillar-line">Fear is not the enemy. It is information. <strong>Earn</strong> the attempt on a soft surface, then decide before you go.</p>
+        <h3 class="tq-pillar-title"><span lang="en">Fear</span><span lang="lt">Baimė</span></h3>
+        <p class="tq-pillar-line"><span lang="en">Fear is not the enemy. It is information. <strong>Earn</strong> the attempt on a soft surface, then decide before you go.</span><span lang="lt">Baimė&nbsp;– ne priešas. Tai informacija. <strong>Užsitarnauk</strong> bandymą ant minkšto pagrindo, o sprendimą priimk prieš šuolį.</span></p>
       </article>
     </div>
   </div>
@@ -388,25 +656,25 @@ main:focus { outline:none; }
 <section class="tq-section" id="how" aria-labelledby="how-title">
   <div class="tq-container">
     <div class="tq-section-head">
-      <h2 class="tq-heading" id="how-title">Read, train, tick.</h2>
+      <h2 class="tq-heading" id="how-title"><span lang="en">Read, train, tick.</span><span lang="lt">Skaityk, treniruokis, žymėk.</span></h2>
     </div>
     <ol class="tq-steps">
       <li class="tq-step">
         <span class="tq-level tq-p-third" aria-hidden="true">I</span>
-        <h3 class="tq-step-title">Read</h3>
-        <p>Open your level in the book. Read the cue for the trick you're on, and the safety note before any flip.</p>
+        <h3 class="tq-step-title"><span lang="en">Read</span><span lang="lt">Skaityk</span></h3>
+        <p><span lang="en">Open your level in the book. Read the cue for the trick you're on, and the safety note before any flip.</span><span lang="lt">Atsiversk savo lygį knygoje. Perskaityk triuko, kurį mokaisi, užuominą ir saugos pastabą prieš bet kurį salto.</span></p>
       </li>
       <li class="tq-steps-sep" aria-hidden="true">&gt;</li>
       <li class="tq-step">
         <span class="tq-level tq-p-two-thirds" aria-hidden="true">II</span>
-        <h3 class="tq-step-title">Train</h3>
-        <p>Three focused sessions a week. Warm up, train on soft ground and film every session.</p>
+        <h3 class="tq-step-title"><span lang="en">Train</span><span lang="lt">Treniruokis</span></h3>
+        <p><span lang="en">Three focused sessions a week. Warm up, train on soft ground and film every session.</span><span lang="lt">Trys susikaupusios treniruotės per savaitę. Apšilk, treniruokis ant minkšto pagrindo ir filmuok kiekvieną treniruotę.</span></p>
       </li>
       <li class="tq-steps-sep" aria-hidden="true">&gt;</li>
       <li class="tq-step">
         <span class="tq-level is-done" aria-hidden="true">III</span>
-        <h3 class="tq-step-title">Tick</h3>
-        <p>Land it clean five times in a row, without a spotter. Tick it in the app. Take the next one.</p>
+        <h3 class="tq-step-title"><span lang="en">Tick</span><span lang="lt">Žymėk</span></h3>
+        <p><span lang="en">Land it clean five times in a row, without a spotter. Tick it in the app. Take the next one.</span><span lang="lt">Atlik švariai penkis kartus iš eilės, be draudžiančiojo. Pažymėk programėlėje. Imkis kito.</span></p>
       </li>
     </ol>
   </div>
@@ -415,65 +683,75 @@ main:focus { outline:none; }
 <section class="tq-section" id="curriculum" aria-labelledby="curriculum-title">
   <div class="tq-container">
     <div class="tq-section-head">
-      <h2 class="tq-heading" id="curriculum-title">Four levels. One order.</h2>
-      <p class="tq-lead">Each level holds 24 tricks in three families of eight. Every trick sits on top of the ones before it. The book's rule: don't start a new level until most of the previous one is ticked.</p>
+      <h2 class="tq-heading" id="curriculum-title"><span lang="en">Four levels. One order.</span><span lang="lt">Keturi lygiai. Viena tvarka.</span></h2>
+      <p class="tq-lead"><span lang="en">Each level holds 24 tricks in three families of eight. Every trick sits on top of the ones before it. The book's rule: don't start a new level until most of the previous one is ticked.</span><span lang="lt">Kiekviename lygyje&nbsp;– 24 triukai, suskirstyti į tris šeimas po aštuonis. Kiekvienas triukas remiasi ankstesniais. Knygos taisyklė: nepradėk naujo lygio, kol nepažymėjai didžiosios ankstesnio dalies.</span></p>
     </div>
     <div class="tq-levels">
       <article class="tq-level-col">
         <span class="tq-level" aria-hidden="true">I</span>
-        <h3 class="tq-level-name">Level I, Foundations</h3>
-        <p class="tq-level-theme">Body control, basic kicks and ground acrobatics.</p>
-        <ul class="tq-level-fams" aria-label="Families"><li class="tq-tag">Kick</li><li class="tq-tag">Setup</li><li class="tq-tag">Flip</li></ul>
-        <p class="tq-label">From Hook to Walkover</p>
+        <h3 class="tq-level-name"><span lang="en">Level I, Foundations</span><span lang="lt">I lygis, Pagrindai</span></h3>
+        <p class="tq-level-theme"><span lang="en">Body control, basic kicks and ground acrobatics.</span><span lang="lt">Kūno kontrolė, baziniai spyriai ir akrobatika ant žemės.</span></p>
+        <ul class="tq-level-fams"><li class="tq-tag"><span lang="en">Kick</span><span lang="lt">Spyriai</span></li><li class="tq-tag"><span lang="en">Setup</span><span lang="lt">Įėjimai</span></li><li class="tq-tag"><span lang="en">Flip</span><span lang="lt">Salto</span></li></ul>
+        <p class="tq-label"><span lang="en">From Front kick to Back flack</span><span lang="lt">Nuo Front kick iki Back flack</span></p>
         <p class="tq-combo"><span>Cartwheel</span><span class="tq-sep" aria-hidden="true">&gt;</span><span>Round off</span><span class="tq-sep" aria-hidden="true">&gt;</span><span>Back flack</span></p>
       </article>
       <article class="tq-level-col">
         <span class="tq-level" aria-hidden="true">II</span>
-        <h3 class="tq-level-name">Level II, Building blocks</h3>
-        <p class="tq-level-theme">Spinning kicks, capoeira kicks and the first aerial flips.</p>
-        <ul class="tq-level-fams" aria-label="Families"><li class="tq-tag">Kick</li><li class="tq-tag">Setup</li><li class="tq-tag">Flip</li></ul>
-        <p class="tq-label">From Compasso to Spyder</p>
+        <h3 class="tq-level-name"><span lang="en">Level II, Building blocks</span><span lang="lt">II lygis, Kertiniai elementai</span></h3>
+        <p class="tq-level-theme"><span lang="en">Spinning kicks, capoeira kicks and the first aerial flips.</span><span lang="lt">Sukamieji spyriai, capoeiros spyriai ir pirmieji salto ore.</span></p>
+        <ul class="tq-level-fams"><li class="tq-tag"><span lang="en">Kick</span><span lang="lt">Spyriai</span></li><li class="tq-tag"><span lang="en">Setup</span><span lang="lt">Įėjimai</span></li><li class="tq-tag"><span lang="en">Flip</span><span lang="lt">Salto</span></li></ul>
+        <p class="tq-label"><span lang="en">From Compasso to Spyder</span><span lang="lt">Nuo Compasso iki Spyder</span></p>
         <p class="tq-combo"><span>Cartwheel</span><span class="tq-sep" aria-hidden="true">&gt;</span><span>Aerial</span></p>
       </article>
       <article class="tq-level-col">
         <span class="tq-level" aria-hidden="true">III</span>
-        <h3 class="tq-level-name">Level III, Off-axis</h3>
-        <p class="tq-level-theme">Swings, gainers and the first twists.</p>
-        <ul class="tq-level-fams" aria-label="Families"><li class="tq-tag">Setup</li><li class="tq-tag">Flip</li><li class="tq-tag">Twist</li></ul>
-        <p class="tq-label">From TDR to 1990</p>
+        <h3 class="tq-level-name"><span lang="en">Level III, Advanced moves</span><span lang="lt">III lygis, Pažangūs judesiai</span></h3>
+        <p class="tq-level-theme"><span lang="en">Swings, gainers and the first twists.</span><span lang="lt">Swing, gainer ir pirmieji sukiniai.</span></p>
+        <ul class="tq-level-fams"><li class="tq-tag"><span lang="en">Setup</span><span lang="lt">Įėjimai</span></li><li class="tq-tag"><span lang="en">Flip</span><span lang="lt">Salto</span></li><li class="tq-tag"><span lang="en">Twist</span><span lang="lt">Sukiniai</span></li></ul>
+        <p class="tq-label"><span lang="en">From TDR to 1990</span><span lang="lt">Nuo TDR iki 1990</span></p>
         <p class="tq-combo"><span>Swing</span><span class="tq-sep" aria-hidden="true">&gt;</span><span>Cork</span></p>
       </article>
       <article class="tq-level-col">
         <span class="tq-level" aria-hidden="true">IV</span>
-        <h3 class="tq-level-name">Level IV, Doubles</h3>
-        <p class="tq-level-theme">Big cheat kicks, double flips and double twists.</p>
-        <ul class="tq-level-fams" aria-label="Families"><li class="tq-tag">Kick</li><li class="tq-tag">Flip</li><li class="tq-tag">Twist</li></ul>
-        <p class="tq-label">From 540 to Ramen king</p>
-        <div class="tq-cue is-safety"><span class="tq-cue-label">Safety</span><p>Every double starts on a trampoline, air track or foam pit, under qualified coaching. Doubles take years, not weeks.</p></div>
+        <h3 class="tq-level-name"><span lang="en">Level IV, Doubles and pro tricks</span><span lang="lt">IV lygis, Dvigubi ir profų triukai</span></h3>
+        <p class="tq-level-theme"><span lang="en">Big cheat kicks, double flips and double twists.</span><span lang="lt">Dideli cheat spyriai, dvigubi salto ir dvigubi sukiniai.</span></p>
+        <ul class="tq-level-fams"><li class="tq-tag"><span lang="en">Kick</span><span lang="lt">Spyriai</span></li><li class="tq-tag"><span lang="en">Flip</span><span lang="lt">Salto</span></li><li class="tq-tag"><span lang="en">Twist</span><span lang="lt">Sukiniai</span></li></ul>
+        <p class="tq-label"><span lang="en">From 540 to Ramen king</span><span lang="lt">Nuo 540 iki Ramen king</span></p>
+        <div class="tq-cue is-safety"><span class="tq-cue-label"><span lang="en">Safety</span><span lang="lt">Saugumas</span></span><p><span lang="en">Every double starts on a trampoline, air track or foam pit, under qualified coaching. Doubles take years, not weeks.</span><span lang="lt">Kiekvienas dvigubas triukas pradedamas ant batuto, oro takelio ar porolono duobės, prižiūrint kvalifikuotam treneriui. Dvigubi triukai užtrunka metus, ne savaites.</span></p></div>
       </article>
     </div>
-    <p class="tq-variations-line">After Level IV come 30 variations: shapes, added kicks, rotation, timing and landings you add to tricks you already land. The levels are finite. The variations are not.</p>
+    <p class="tq-variations-line"><span lang="en">After Level IV come 30 variations: shapes, added kicks, rotation, timing and landings you add to tricks you already land. The levels are finite. The variations are not.</span><span lang="lt">Po IV lygio&nbsp;– 30 variacijų: formos, papildomi spyriai, sukimasis, laikas ir nusileidimai, kuriuos pridedi prie jau įvaldytų triukų. Lygių skaičius baigtinis. Variacijų&nbsp;– ne.</span></p>
   </div>
 </section>
 
-<section class="tq-section" id="coach" aria-labelledby="coach-title">
+<section class="tq-section" id="authors" aria-labelledby="authors-title">
   <div class="tq-container tq-coach">
     <figure class="tq-coach-media">
-      <img src="{{IMG_REMINDERS}}" width="600" height="848" alt="The coaching reminders page from the book, the original Trickologue reminder board">
-      <figcaption class="tq-small">The original reminder board, Appendix B of the book.</figcaption>
+      <img id="img-reminders" src="{{IMG_REMINDERS}}" width="600" height="848" alt="The coaching reminders page from the book, the original Trickologue reminder board">
+      <figcaption class="tq-small"><span lang="en">The original reminder board, Appendix B of the book.</span><span lang="lt">Originali priminimų lenta, knygos B priedas.</span></figcaption>
     </figure>
     <div class="tq-coach-copy">
-      <p class="tq-label">Your coach</p>
-      <h2 class="tq-heading" id="coach-title">Tomas Noruševičius</h2>
-      <p class="tq-prose">Tricker, acrobat and movement coach from Vilnius, Lithuania. Tomas wrote his bachelor's thesis on tricking in the creative industries. That research became the first Trickologue training plan, built for children's and adult groups at the Skypark Vilnius trampoline park.</p>
-      <p class="tq-prose">The level boards from that plan became the book, written with Šarūnas Pupelis of Panevėžys (<a class="tq-link" href="https://www.instagram.com/trick3ris/" target="_blank" rel="noopener">@trick3ris</a>). The trick names in the book match the boards in the app.</p>
+      <p class="tq-label"><span lang="en">The authors</span><span lang="lt">Autoriai</span></p>
+      <h2 class="tq-heading" id="authors-title">Tomas Noruševičius <span aria-hidden="true">&amp;</span><span class="sr"><span lang="en">and</span><span lang="lt">ir</span></span> Šarūnas Pupelis</h2>
+      <p class="tq-prose"><span lang="en">Tomas is a tricker, acrobat and movement coach from Vilnius, Lithuania. He wrote his bachelor's thesis on tricking in the creative industries. That research became the first Trickologue training plan, built for children's and adult groups at the Skypark Vilnius trampoline park.</span><span lang="lt">Tomas&nbsp;– trikeris, akrobatas ir judesio treneris iš Vilniaus. Bakalauro darbą jis rašė apie trikingą kūrybinėse industrijose. Šis tyrimas tapo pirmuoju Trickologue treniruočių planu, sukurtu vaikų ir suaugusiųjų grupėms Skypark Vilnius batutų parke.</span></p>
+      <p class="tq-prose"><span lang="en">The level boards from that plan became the book, written with tricker Šarūnas Pupelis of Panevėžys. The trick names in the book match the boards in the app.</span><span lang="lt">To plano lygių lentos virto knyga, kurią Tomas parašė kartu su trikeriu Šarūnu Pupeliu iš Panevėžio. Knygos triukų pavadinimai sutampa su programėlės lentomis.</span></p>
+      <ul class="tq-people">
+        <li class="tq-person"><span class="tq-person-name">Tomas Noruševičius</span><a class="tq-link" href="https://www.instagram.com/trickologue/" target="_blank" rel="noopener">@trickologue <span class="sr"><span lang="en">on Instagram</span><span lang="lt">Instagram</span></span></a></li>
+        <li class="tq-person"><span class="tq-person-name">Šarūnas Pupelis</span><a class="tq-link" href="https://www.instagram.com/trick3ris/" target="_blank" rel="noopener">@trick3ris <span class="sr"><span lang="en">on Instagram</span><span lang="lt">Instagram</span></span></a></li>
+      </ul>
       <div class="tq-cue">
-        <span class="tq-cue-label">Reminder</span>
-        <p>Rolls, soft ground and a <strong>spotter</strong> come before every flip. Fear shows the way.</p>
+        <span class="tq-cue-label"><span lang="en">Reminder</span><span lang="lt">Priminimas</span></span>
+        <p><span lang="en">Rolls, soft ground and a <strong>spotter</strong> come before every flip. Fear shows the way.</span><span lang="lt">Prieš kiekvieną salto&nbsp;– kūliai, minkštas pagrindas ir <strong>draudžiantysis</strong>. Baimė rodo kelią.</span></p>
       </div>
-      <div class="tq-row">
-        <a class="tq-btn" href="https://calendly.com/tomas-norusevicius/akro" target="_blank" rel="noopener">Train with Tomas in Vilnius</a>
-        <a class="tq-btn" href="https://instagram.com/trickologue" target="_blank" rel="noopener">@trickologue on Instagram</a>
+      <div class="tq-train">
+        <div class="tq-train-head">
+          <p class="tq-train-title"><span lang="en">Train with Tomas</span><span lang="lt">Treniruokis su Tomu</span></p>
+          <p class="tq-label"><span lang="en">Vilnius, Lithuania</span><span lang="lt">Vilnius, Lietuva</span></p>
+        </div>
+        <div class="tq-train-actions">
+          <a class="tq-btn" href="https://calendly.com/tomas-norusevicius/trickologue-group" target="_blank" rel="noopener"><span lang="en">Group training</span><span lang="lt">Grupinė treniruotė</span><span class="tq-btn-sub"><span lang="en">Book in Calendly</span><span lang="lt">Registruokis Calendly</span></span></a>
+          <a class="tq-btn" href="https://calendly.com/tomas-norusevicius/akro" target="_blank" rel="noopener"><span lang="en">Private session</span><span lang="lt">Individuali treniruotė</span><span class="tq-btn-sub"><span lang="en">One-on-one</span><span lang="lt">Vienas su treneriu</span></span></a>
+        </div>
       </div>
     </div>
   </div>
@@ -482,48 +760,52 @@ main:focus { outline:none; }
 <section class="tq-section" id="faq" aria-labelledby="faq-title">
   <div class="tq-container">
     <div class="tq-section-head">
-      <h2 class="tq-heading" id="faq-title">Questions before you start.</h2>
+      <h2 class="tq-heading" id="faq-title"><span lang="en">Questions before you start.</span><span lang="lt">Klausimai prieš pradedant.</span></h2>
     </div>
     <div class="tq-faq">
-      <details class="tq-faq-item" open>
-        <summary class="tq-faq-q">What do I get when I buy?</summary>
-        <p class="tq-faq-a">Two things, by email, straight after checkout: the 60-page book as a PDF to download, and your link to the Trickologue app to open on your phone. You pay once and keep both.</p>
+      <details class="tq-faq-item" id="faq-first">
+        <summary class="tq-faq-q"><span lang="en">What do I get when I buy?</span><span lang="lt">Ką gausiu nusipirkęs?</span></summary>
+        <p class="tq-faq-a"><span lang="en">Two things, by email, straight after checkout: the 60-page book as a PDF to download, and your access to the Trickologue app. You pay once and keep both.</span><span lang="lt">Iškart po apmokėjimo el. paštu gausi du dalykus: 60 puslapių knygą PDF formatu ir prieigą prie Trickologue programėlės. Moki vieną kartą ir pasilieki abu.</span></p>
       </details>
       <details class="tq-faq-item">
-        <summary class="tq-faq-q">Am I too old to start?</summary>
-        <p class="tq-faq-a">Age changes your timeline, not the answer. Start at Level I. A longer warm-up and daily stretching do the rest.</p>
+        <summary class="tq-faq-q"><span lang="en">Which phones does the app work on?</span><span lang="lt">Kokiuose telefonuose veikia programėlė?</span></summary>
+        <p class="tq-faq-a"><span lang="en">Any phone with a browser: open it, no login, and your progress stays on that device. On iPhone and iPad you can also run it in the free Scriptable app, which adds home- and lock-screen widgets with your next trick, an English / Lithuanian switch, and saves your progress to iCloud Drive.</span><span lang="lt">Bet kuriame telefone su naršykle: atsidarai, prisijungti nereikia, o pažanga lieka tame įrenginyje. iPhone ir iPad ją taip pat gali paleisti nemokamoje Scriptable programėlėje: atsiranda valdikliai pagrindiniame ir užrakinimo ekrane su tavo kitu triuku, anglų / lietuvių kalbos jungiklis, o pažanga saugoma iCloud Drive.</span></p>
       </details>
       <details class="tq-faq-item">
-        <summary class="tq-faq-q">How long until my first backflip?</summary>
-        <p class="tq-faq-a">In the book's sample path, a first backflip lands on a trampoline or foam pit in weeks 9 to 12, at three sessions a week. The floor version comes after, one surface at a time. Treat the weeks as a guide, not a deadline.</p>
+        <summary class="tq-faq-q"><span lang="en">What language is it in?</span><span lang="lt">Kokia kalba?</span></summary>
+        <p class="tq-faq-a"><span lang="en">The book is in English. This page and the iPhone app also come in Lithuanian. Trick names stay in English in both, as trickers use them everywhere.</span><span lang="lt">Knyga parašyta anglų kalba. Šis puslapis ir iPhone programėlė yra ir lietuviškai. Triukų pavadinimai abiem kalbomis lieka angliški&nbsp;– taip juos vartoja trikeriai visame pasaulyje.</span></p>
       </details>
       <details class="tq-faq-item">
-        <summary class="tq-faq-q">Do I need a gym?</summary>
-        <p class="tq-faq-a">Kicks and setups need no equipment. Any flat surface works. New flips and twists follow the surface ladder: trampoline, air track or foam pit first, then mats, grass and finally the floor.</p>
+        <summary class="tq-faq-q"><span lang="en">Can I train with Tomas in person?</span><span lang="lt">Ar galiu treniruotis su Tomu gyvai?</span></summary>
+        <p class="tq-faq-a"><span lang="en">Yes, in Vilnius. Join a <a class="tq-link" href="https://calendly.com/tomas-norusevicius/trickologue-group" target="_blank" rel="noopener">group training</a> or book a <a class="tq-link" href="https://calendly.com/tomas-norusevicius/akro" target="_blank" rel="noopener">private session</a> and pick a time that suits you. New flips are learned on soft ground with a spotter.</span><span lang="lt">Taip, Vilniuje. Prisijunk prie <a class="tq-link" href="https://calendly.com/tomas-norusevicius/trickologue-group" target="_blank" rel="noopener">grupinės treniruotės</a> arba registruokis į <a class="tq-link" href="https://calendly.com/tomas-norusevicius/akro" target="_blank" rel="noopener">individualią treniruotę</a> ir išsirink tinkamą laiką. Nauji salto mokomi ant minkšto pagrindo su draudžiančiuoju.</span></p>
       </details>
       <details class="tq-faq-item">
-        <summary class="tq-faq-q">Is it dangerous?</summary>
-        <p class="tq-faq-a">Tricking carries a real risk of injury. Every flip in the book opens with a safety cue: soft ground, a full warm-up, a spotter. Rolls and bails come first. Never try a new flip when you are tired, and learn every double under qualified coaching.</p>
+        <summary class="tq-faq-q"><span lang="en">Am I too old to start?</span><span lang="lt">Ar ne per vėlu pradėti?</span></summary>
+        <p class="tq-faq-a"><span lang="en">Age changes your timeline, not the answer. Start at Level I. A longer warm-up and daily stretching do the rest.</span><span lang="lt">Amžius keičia tavo tempą, bet ne atsakymą. Pradėk nuo I lygio. Ilgesnis apšilimas ir kasdienis tempimasis padarys likusį darbą.</span></p>
       </details>
       <details class="tq-faq-item">
-        <summary class="tq-faq-q">What if I'm scared?</summary>
-        <p class="tq-faq-a">Fear is normal. The book names two kinds. Warning fear says you skipped a step, the surface is wrong or you are tired: go back one step. Habit fear is what is left when your drills and the soft-surface version are solid. That is the fear that shows the way.</p>
+        <summary class="tq-faq-q"><span lang="en">How long until my first backflip?</span><span lang="lt">Per kiek laiko išmoksiu pirmą backflip?</span></summary>
+        <p class="tq-faq-a"><span lang="en">In the book's sample path, a first backflip lands on a trampoline or foam pit in weeks 9 to 12, at three sessions a week. The floor version comes after, one surface at a time. Treat the weeks as a guide, not a deadline.</span><span lang="lt">Knygos pavyzdiniame plane pirmasis backflip ant batuto ar porolono duobės pavyksta 9–12 savaitę, treniruojantis tris kartus per savaitę. Ant grindų&nbsp;– vėliau, keičiant pagrindą po vieną. Savaites laikyk gairėmis, ne terminu.</span></p>
       </details>
       <details class="tq-faq-item">
-        <summary class="tq-faq-q">Do I need flexibility?</summary>
-        <p class="tq-faq-a">Level I starts where you are. The book's daily routine takes fifteen minutes, and fifteen minutes every day does more than an hour once a week.</p>
+        <summary class="tq-faq-q"><span lang="en">Do I need a gym?</span><span lang="lt">Ar man reikia sporto salės?</span></summary>
+        <p class="tq-faq-a"><span lang="en">Kicks and setups need no equipment. Any flat surface works. New flips and twists follow the surface ladder: trampoline, air track or foam pit first, then mats, grass and finally the floor.</span><span lang="lt">Spyriams ir įėjimams įrangos nereikia&nbsp;– tinka bet koks lygus paviršius. Nauji salto ir sukiniai mokomi pagal pagrindų kopėčias: pirma batutas, oro takelis ar porolono duobė, tada čiužiniai, žolė ir galiausiai grindys.</span></p>
       </details>
       <details class="tq-faq-item">
-        <summary class="tq-faq-q">I'm a coach. Can I use it with my athletes?</summary>
-        <p class="tq-faq-a">Yes. Teach from the level boards and print the progress tracker and training log for your group. For copies for a whole club, write to Tomas on Instagram.</p>
+        <summary class="tq-faq-q"><span lang="en">Is it dangerous?</span><span lang="lt">Ar tai pavojinga?</span></summary>
+        <p class="tq-faq-a"><span lang="en">Tricking carries a real risk of injury. Every flip in the book opens with a safety cue: soft ground, a full warm-up, a spotter. Rolls and bails come first. Never try a new flip when you are tired, and learn every double under qualified coaching.</span><span lang="lt">Trikingas kelia realią traumų riziką. Kiekvienas knygos salto prasideda saugos užuomina: minkštas pagrindas, pilnas apšilimas, draudžiantysis. Pirma&nbsp;– kūliai ir saugūs išėjimai. Niekada nebandyk naujo salto pavargęs, o visus dvigubus triukus mokykis su kvalifikuotu treneriu.</span></p>
       </details>
       <details class="tq-faq-item">
-        <summary class="tq-faq-q">What language is it in?</summary>
-        <p class="tq-faq-a">English. Trick names stay in English, as trickers use them everywhere.</p>
+        <summary class="tq-faq-q"><span lang="en">What if I'm scared?</span><span lang="lt">O jei bijau?</span></summary>
+        <p class="tq-faq-a"><span lang="en">Fear is normal. The book names two kinds. Warning fear says you skipped a step, the surface is wrong or you are tired: go back one step. Habit fear is what is left when your drills and the soft-surface version are solid. That is the fear that shows the way.</span><span lang="lt">Bijoti normalu. Knyga skiria dvi baimės rūšis. Įspėjamoji baimė sako, kad praleidai žingsnį, pagrindas netinkamas arba esi pavargęs: grįžk vienu žingsniu atgal. Įpročio baimė lieka tada, kai pratimai ir versija ant minkšto pagrindo jau tvirti. Būtent ji rodo kelią.</span></p>
       </details>
       <details class="tq-faq-item">
-        <summary class="tq-faq-q">Can I train with Tomas in person?</summary>
-        <p class="tq-faq-a">Yes, in Vilnius. <a class="tq-link" href="https://calendly.com/tomas-norusevicius/akro" target="_blank" rel="noopener">Book a training</a> and pick a time that suits you. New flips are learned on soft ground with a spotter.</p>
+        <summary class="tq-faq-q"><span lang="en">Do I need flexibility?</span><span lang="lt">Ar reikia lankstumo?</span></summary>
+        <p class="tq-faq-a"><span lang="en">Level I starts where you are. The book's daily routine takes fifteen minutes, and fifteen minutes every day does more than an hour once a week.</span><span lang="lt">I lygis prasideda ten, kur esi dabar. Knygos kasdienė rutina trunka penkiolika minučių, o penkiolika minučių kasdien duoda daugiau nei valanda kartą per savaitę.</span></p>
+      </details>
+      <details class="tq-faq-item">
+        <summary class="tq-faq-q"><span lang="en">I'm a coach. Can I use it with my athletes?</span><span lang="lt">Esu treneris. Ar galiu naudoti su savo sportininkais?</span></summary>
+        <p class="tq-faq-a"><span lang="en">Yes. Teach from the level boards and print the progress tracker and training log for your group. For copies for a whole club, write to Tomas on <a class="tq-link" href="https://www.instagram.com/trickologue/" target="_blank" rel="noopener">Instagram</a>.</span><span lang="lt">Taip. Mokyk pagal lygių lentas, atsispausdink pažangos lentelę ir treniruočių žurnalą savo grupei. Dėl kopijų visam klubui parašyk Tomui <a class="tq-link" href="https://www.instagram.com/trickologue/" target="_blank" rel="noopener">Instagram</a>.</span></p>
       </details>
     </div>
   </div>
@@ -531,11 +813,15 @@ main:focus { outline:none; }
 
 <section class="tq-band" aria-labelledby="band-title">
   <span class="tq-logo tq-logo-stacked"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32.77 53.99A22 22 0 1 1 50.66 43.66" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="43" cy="51.05" r="4" fill="currentColor"/></svg><span>Trickologue</span></span>
-  <h2 class="tq-band-title" id="band-title">Your next trick is in here.</h2>
-  <p class="tq-band-sub">The book and the app, from your first hook kick to your first double cork.</p>
-  <p class="tq-price"><span class="tq-price-value" data-gumroad-field="price">€49</span><span class="tq-price-terms">One payment · no subscription</span></p>
-  <button type="button" class="tq-btn tq-btn-primary tq-btn-lg" id="band-cta" data-gold-watch data-gumroad-action="buy">I want this</button>
-  <p class="tq-small">Train on soft ground, warm up, and learn new flips with a spotter.</p>
+  <h2 class="tq-band-title" id="band-title"><span lang="en">Your next trick is in here.</span><span lang="lt">Tavo kitas triukas&nbsp;– čia.</span></h2>
+  <p class="tq-band-sub"><span lang="en">The book and the app, from your first hook kick to your first double cork.</span><span lang="lt">Knyga ir programėlė&nbsp;– nuo pirmo hook spyrio iki pirmo dvigubo cork.</span></p>
+  <p class="tq-price"><span class="tq-price-value" data-gumroad-field="price">€49</span><span class="tq-price-terms"><span lang="en">One payment · no subscription</span><span lang="lt">Vienas mokėjimas · jokios prenumeratos</span></span></p>
+  <button type="button" class="tq-btn tq-btn-primary tq-btn-lg tq-gold-watch" id="band-cta" data-gumroad-action="buy"><span lang="en">I want this</span><span lang="lt">Noriu šito</span></button>
+  <p class="tq-band-train"><span><span lang="en">Rather learn in person?</span><span lang="lt">Nori mokytis gyvai?</span></span>
+    <a href="https://calendly.com/tomas-norusevicius/trickologue-group" target="_blank" rel="noopener"><span lang="en">Group training</span><span lang="lt">Grupinė treniruotė</span></a>
+    <a href="https://calendly.com/tomas-norusevicius/akro" target="_blank" rel="noopener"><span lang="en">Private session</span><span lang="lt">Individuali treniruotė</span></a>
+  </p>
+  <p class="tq-small"><span lang="en">Train on soft ground, warm up, and learn new flips with a spotter.</span><span lang="lt">Treniruokis ant minkšto pagrindo, apšilk, o naujus salto mokykis su draudžiančiuoju.</span></p>
 </section>
 </main>
 
@@ -543,48 +829,169 @@ main:focus { outline:none; }
   <div class="tq-footer-grid">
     <div>
       <a class="tq-logo" href="#top"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32.77 53.99A22 22 0 1 1 50.66 43.66" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="43" cy="51.05" r="4" fill="currentColor"/></svg><span>Trickologue</span></a>
-      <p class="tq-small tq-footer-blurb">Every trick, in order. Coached by Tomas Noruševičius, Vilnius, Lithuania.</p>
+      <p class="tq-small tq-footer-blurb"><span lang="en">Every trick, in order. By Tomas Noruševičius and Šarūnas Pupelis, Lithuania.</span><span lang="lt">Kiekvienas triukas&nbsp;– iš eilės. Tomas Noruševičius ir Šarūnas Pupelis, Lietuva.</span></p>
     </div>
     <ul class="tq-footer-col">
       <li class="tq-footer-head">Trickologue</li>
-      <li><a class="tq-footer-link" href="https://tomnorush.gumroad.com/l/trickologue">The book</a></li>
-      <li><a class="tq-footer-link" href="https://tomnorush.gumroad.com/l/oxdvv">The app</a></li>
-      <li><a class="tq-footer-link" href="https://tomnorush.gumroad.com">All products</a></li>
+      <li><a class="tq-footer-link" href="https://tomnorush.gumroad.com/l/trickologue"><span lang="en">The book</span><span lang="lt">Knyga</span></a></li>
+      <li><a class="tq-footer-link" href="https://tomnorush.gumroad.com/l/oxdvv"><span lang="en">The app</span><span lang="lt">Programėlė</span></a></li>
+      <li><a class="tq-footer-link" href="https://tomnorush.gumroad.com"><span lang="en">All products</span><span lang="lt">Visi produktai</span></a></li>
     </ul>
     <ul class="tq-footer-col">
-      <li class="tq-footer-head">Coach</li>
-      <li><a class="tq-footer-link" href="https://calendly.com/tomas-norusevicius/akro" target="_blank" rel="noopener">Book a training</a></li>
-      <li><a class="tq-footer-link" href="https://instagram.com/trickologue" target="_blank" rel="noopener">Instagram</a></li>
+      <li class="tq-footer-head"><span lang="en">Train</span><span lang="lt">Treniruotės</span></li>
+      <li><a class="tq-footer-link" href="https://calendly.com/tomas-norusevicius/trickologue-group" target="_blank" rel="noopener"><span lang="en">Group training</span><span lang="lt">Grupinė treniruotė</span></a></li>
+      <li><a class="tq-footer-link" href="https://calendly.com/tomas-norusevicius/akro" target="_blank" rel="noopener"><span lang="en">Private session</span><span lang="lt">Individuali treniruotė</span></a></li>
+    </ul>
+    <ul class="tq-footer-col">
+      <li class="tq-footer-head">Instagram</li>
+      <li><a class="tq-footer-link" href="https://www.instagram.com/trickologue/" target="_blank" rel="noopener">@trickologue</a></li>
+      <li><a class="tq-footer-link" href="https://www.instagram.com/trick3ris/" target="_blank" rel="noopener">@trick3ris <span class="sr">(Šarūnas Pupelis)</span></a></li>
     </ul>
   </div>
-  <p class="tq-footer-legal">© 2026 Tomas Noruševičius, Vilnius, Lithuania. Tricking is an acrobatic activity with an inherent risk of serious injury. The book and the app are for educational purposes and do not replace qualified, in-person coaching or medical advice. You train at your own risk.</p>
+  <p class="tq-footer-legal"><span lang="en">© 2026 Tomas Noruševičius, Vilnius, Lithuania. Tricking is an acrobatic activity with an inherent risk of serious injury. The book and the app are for educational purposes and do not replace qualified, in-person coaching or medical advice. You train at your own risk.</span><span lang="lt">© 2026 Tomas Noruševičius, Vilnius, Lietuva. Trikingas&nbsp;– akrobatinė veikla, kuriai būdinga rimtų traumų rizika. Knyga ir programėlė skirtos mokymuisi ir nepakeičia kvalifikuoto trenerio gyvai ar medicininės konsultacijos. Treniruojiesi savo rizika.</span></p>
 </footer>
 
 <script>
 (function () {
   "use strict";
-  var d = document;
+  var d = document, root = d.documentElement;
   var reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  function $(s) { return d.querySelector(s); }
-  function $$(s) { return Array.prototype.slice.call(d.querySelectorAll(s)); }
+  function $(s, el) { return (el || d).querySelector(s); }
+  function $$(s, el) { return Array.prototype.slice.call((el || d).querySelectorAll(s)); }
+  root.classList.add("js");
+
+  /* Language: English or Lithuanian. First visit follows the browser; the choice is remembered when storage is allowed. */
+  var KEY = "trickologue:lang";
+  var TITLE = { en: "Trickologue: Book + App", lt: "Trickologue: knyga + programėlė" };
+  var ATTRS = [
+    ["#nav", "aria-label", "Page", "Puslapis"],
+    ["#nav-logo", "aria-label", "Trickologue, back to top", "Trickologue, į viršų"],
+    ["#lang-switch", "aria-label", "Language", "Kalba"],
+    ["#q-progress", "aria-label", "Quiz progress", "Testo eiga"],
+    ["#img-cover", "alt", "The cover of the Trickologue book: The Tricking Progression System, Levels I to IV", "Trickologue knygos viršelis: The Tricking Progression System, I–IV lygiai"],
+    ["#img-phone", "alt", "The Trickologue app on a phone, showing the Level I board of kicks, setups and flips", "Trickologue programėlė telefone: I lygio spyrių, įėjimų ir salto lenta"],
+    ["#img-reminders", "alt", "The coaching reminders page from the book, the original Trickologue reminder board", "Knygos trenerio priminimų puslapis&nbsp;– originali Trickologue priminimų lenta"]
+  ];
+  function store(v) {
+    try { if (v === undefined) return window.localStorage.getItem(KEY); window.localStorage.setItem(KEY, v); } catch (e) {}
+    return null;
+  }
+  function setLang(l, save) {
+    l = l === "lt" ? "lt" : "en";
+    root.classList.toggle("is-lt", l === "lt");
+    root.setAttribute("lang", l);
+    d.title = TITLE[l];
+    ATTRS.forEach(function (a) { var el = $(a[0]); if (el) el.setAttribute(a[1], l === "lt" ? a[3] : a[2]); });
+    ["en", "lt"].forEach(function (k) { var b = $("#lang-" + k); if (b) b.setAttribute("aria-pressed", String(k === l)); });
+    if (save) store(l);
+  }
+  var nav = String((navigator.languages && navigator.languages[0]) || navigator.language || "").toLowerCase();
+  setLang(store() || (nav.indexOf("lt") === 0 ? "lt" : "en"));
+  ["en", "lt"].forEach(function (k) {
+    var b = $("#lang-" + k);
+    if (b) b.addEventListener("click", function () { setLang(k, true); });
+  });
+
+  /* Level quiz: one level at a time; five of six ticked moves you up. The result opens the next steps: buy, group training, private session. */
+  var card = $("#quiz-card");
+  if (card) {
+    var steps = $$(".tq-q-step", card), foot = $("#q-foot"), result = $("#q-result");
+    var back = $("#q-back"), next = $("#q-next"), restart = $("#q-restart");
+    var dots = $$("#q-progress li"), PASS = 5, NUM = ["I", "II", "III", "IV"];
+    var answers = [], cur = 0;
+    var ticked = function (i) { return $$('.tq-chip[aria-pressed="true"]', steps[i]).length; };
+    var ring = function (el, p) { el.style.setProperty("--p", p.toFixed(3)); };
+    var paintDots = function () {
+      dots.forEach(function (li, i) {
+        var n = i === cur ? ticked(i) : answers[i];
+        ring($(".tq-level", li), n === undefined ? 0 : n / 6);
+        li.classList.toggle("is-seen", i < cur);
+        if (i === cur && result.hidden) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
+      });
+    };
+    var update = function () {
+      var n = ticked(cur);
+      $$(".q-count", foot).forEach(function (b) { b.textContent = n; });
+      next.classList.toggle("is-done", !(n >= PASS && cur < 3));
+      paintDots();
+    };
+    var show = function (i, focus) {
+      cur = i;
+      steps.forEach(function (s, j) { s.hidden = j !== i; });
+      result.hidden = true; foot.hidden = false; back.hidden = i === 0;
+      update();
+      if (focus) { var h = $(".tq-q-title", steps[i]); if (h) h.focus({ preventScroll: true }); }
+    };
+    var finish = function (lv) {
+      steps.forEach(function (s) { s.hidden = true; });
+      foot.hidden = true; result.hidden = false;
+      dots.forEach(function (li) { li.removeAttribute("aria-current"); li.classList.add("is-seen"); });
+      $$(".tq-q-var", result).forEach(function (v, j) { v.hidden = j !== lv; });
+      $$(".q-body", result).forEach(function (v, j) { v.hidden = j !== lv; });
+      var r = $("#q-res-ring");
+      r.textContent = lv < 4 ? NUM[lv] : "∞";
+      ring(r, lv < 4 ? (answers[lv] || 0) / 6 : 1);
+      r.classList.toggle("is-done", lv === 4);
+      var score = $("#q-score");
+      score.hidden = lv === 4;
+      $$(".q-n", score).forEach(function (b) { b.textContent = answers[lv] || 0; });
+      $$(".q-lv", score).forEach(function (b) { b.textContent = NUM[Math.min(lv, 3)]; });
+      $$(".tq-q-rings > span", result).forEach(function (s, i) {
+        var n = answers[i], lvl = $(".q-ring", s);
+        ring(lvl, n === undefined ? 0 : n / 6);
+        lvl.classList.toggle("is-done", n === 6);
+        $(".q-ring-n", s).textContent = n === undefined ? "–" : n + " / 6";
+      });
+      var h = $("#q-var-" + lv + " .tq-heading");
+      if (h) h.focus({ preventScroll: true });
+      result.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
+    };
+    card.addEventListener("click", function (e) {
+      var chip = e.target.closest(".tq-chip");
+      if (!chip) return;
+      chip.setAttribute("aria-pressed", String(chip.getAttribute("aria-pressed") !== "true"));
+      update();
+    });
+    next.addEventListener("click", function () {
+      var n = ticked(cur);
+      answers[cur] = n;
+      answers.length = cur + 1;
+      if (n >= PASS && cur < 3) show(cur + 1, true);
+      else finish(n >= PASS ? 4 : cur);
+    });
+    back.addEventListener("click", function () { if (cur > 0) show(cur - 1, true); });
+    restart.addEventListener("click", function () {
+      $$(".tq-chip", card).forEach(function (c) { c.setAttribute("aria-pressed", "false"); });
+      answers = [];
+      show(0, true);
+      card.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
+    });
+    show(0, false);
+  }
 
   /* The Spot as scroll progress: the ring in the nav mark fills along its path and lands on the dot at the end of the page. */
-  var ring = $(".tq-logo-ring");
-  if (ring && !reduce) {
+  /* Gumroad's sanitizer strips the open attribute, so the first answer is opened here. */
+  var firstFaq = $("#faq-first");
+  if (firstFaq) firstFaq.open = true;
+
+  var mark = $(".tq-logo-ring");
+  var fill = mark && $(".tq-ring-fill", mark);
+  if (fill && !reduce) { fill.setAttribute("pathLength", "1"); fill.classList.add("has-len"); }
+  if (mark && !reduce) {
     var ticking = false;
     var paint = function () {
       ticking = false;
       var max = d.documentElement.scrollHeight - window.innerHeight;
       var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 1;
-      ring.style.setProperty("--scroll", p.toFixed(3));
+      mark.style.setProperty("--scroll", p.toFixed(3));
     };
     window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }, { passive: true });
     window.addEventListener("resize", paint);
     paint();
   }
 
-  /* One gold fill per screen: the nav buy button turns gold only when no other gold buy button is in view. */
-  var navCta = $("#nav-cta"), watched = $$("[data-gold-watch]");
+  /* One gold fill per screen: the nav buy button turns gold only when no other gold button is in view. */
+  var navCta = $("#nav-cta"), watched = $$(".tq-gold-watch");
   if (navCta && "IntersectionObserver" in window && watched.length) {
     var seen = {};
     var io = new IntersectionObserver(function (entries) {

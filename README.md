@@ -11,12 +11,14 @@ Every trick, in order. A tricking progression system by Tomas Noruševičius: fo
 | `data/i18n.json` | Every UI string and the eight reminders in English and Lithuanian. Trick names stay in English. |
 | `lovable/add-lithuanian.md` | A ready-to-paste prompt that adds the same EN / LT switch to the Lovable app. |
 | `docs/app-decision.md` | Why the Lovable version is the base, checked against the brand book. |
-| `tools/` | Build and test scripts for the Scriptable app. |
+| `gumroad/` | The custom Gumroad page for the Book + App bundle, in English and Lithuanian, with a level quiz and Calendly booking. See `gumroad/README.md`. |
+| `tools/` | Build and test scripts for the Scriptable app and the Gumroad page. |
 
 ## Live versions
 
 - Web app: https://trickologue.lovable.app
 - Book and app: https://tomnorush.gumroad.com/l/jlpas
-- Trainings in Vilnius: https://calendly.com/tomas-norusevicius/akro
+- Group trainings in Vilnius: https://calendly.com/tomas-norusevicius/trickologue-group
+- Private sessions in Vilnius: https://calendly.com/tomas-norusevicius/akro
 
 The book's text and illustrations are not in this repository; it is public.
