@@ -78,7 +78,8 @@ main:focus, [tabindex="-1"]:focus { outline:none; }
 .tq-logo-stacked { flex-direction:column; gap:.45em; }
 .tq-logo-stacked svg { width:2em; height:2em; }
 .tq-logo-ring .tq-ring-track { color:var(--line-ui); opacity:.55; }
-.tq-logo-ring .tq-ring-fill { stroke-dasharray:1; stroke-dashoffset:calc(1 - var(--scroll, 1)); }
+/* The script sets pathLength (Gumroad's sanitizer strips it) and adds .has-len; without it the ring shows full. */
+.tq-logo-ring .tq-ring-fill.has-len { stroke-dasharray:1; stroke-dashoffset:calc(1 - var(--scroll, 1)); }
 @media (prefers-reduced-motion: reduce) { .tq-logo-ring .tq-ring-fill { stroke-dashoffset:0; } }
 
 /* Buttons: one gold fill per screen */
@@ -370,7 +371,7 @@ main:focus, [tabindex="-1"]:focus { outline:none; }
   <a class="tq-logo" href="#top" id="nav-logo" aria-label="Trickologue, back to top">
     <svg class="tq-logo-ring" viewBox="0 0 64 64" aria-hidden="true">
       <path class="tq-ring-track" d="M32.77 53.99A22 22 0 1 1 50.66 43.66" fill="none" stroke="currentColor" stroke-width="6"/>
-      <path class="tq-ring-fill" d="M32.77 53.99A22 22 0 1 1 50.66 43.66" fill="none" stroke="currentColor" stroke-width="6" pathLength="1"/>
+      <path class="tq-ring-fill" d="M32.77 53.99A22 22 0 1 1 50.66 43.66" fill="none" stroke="currentColor" stroke-width="6"/>
       <circle cx="43" cy="51.05" r="4" fill="currentColor"/>
     </svg>
     <span>Trickologue</span>
@@ -762,7 +763,7 @@ main:focus, [tabindex="-1"]:focus { outline:none; }
       <h2 class="tq-heading" id="faq-title"><span lang="en">Questions before you start.</span><span lang="lt">Klausimai prieš pradedant.</span></h2>
     </div>
     <div class="tq-faq">
-      <details class="tq-faq-item" open>
+      <details class="tq-faq-item" id="faq-first">
         <summary class="tq-faq-q"><span lang="en">What do I get when I buy?</span><span lang="lt">Ką gausiu nusipirkęs?</span></summary>
         <p class="tq-faq-a"><span lang="en">Two things, by email, straight after checkout: the 60-page book as a PDF to download, and your access to the Trickologue app. You pay once and keep both.</span><span lang="lt">Iškart po apmokėjimo el. paštu gausi du dalykus: 60 puslapių knygą PDF formatu ir prieigą prie Trickologue programėlės. Moki vieną kartą ir pasilieki abu.</span></p>
       </details>
@@ -969,7 +970,13 @@ main:focus, [tabindex="-1"]:focus { outline:none; }
   }
 
   /* The Spot as scroll progress: the ring in the nav mark fills along its path and lands on the dot at the end of the page. */
+  /* Gumroad's sanitizer strips the open attribute, so the first answer is opened here. */
+  var firstFaq = $("#faq-first");
+  if (firstFaq) firstFaq.open = true;
+
   var mark = $(".tq-logo-ring");
+  var fill = mark && $(".tq-ring-fill", mark);
+  if (fill && !reduce) { fill.setAttribute("pathLength", "1"); fill.classList.add("has-len"); }
   if (mark && !reduce) {
     var ticking = false;
     var paint = function () {

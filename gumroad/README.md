@@ -27,6 +27,8 @@ node tools/build-landing.mjs      # writes gumroad/landing.html; warns if a char
 
 ## Publish
 
+Live since 5 November 2026 at https://tomnorush.gumroad.com/l/trickologue-bundle.
+
 Needs the Gumroad CLI, signed in to Tomas's account (`gumroad auth login`), and network access to gumroad.com.
 
 ```sh
@@ -42,6 +44,8 @@ gumroad products page url unkcjb --json --jq '.product.landing_url' --no-input -
 # Undo: restore Gumroad's default product page
 gumroad products page clear unkcjb --yes --json --no-input --non-interactive
 ```
+
+Gumroad's sanitizer always removes the `<meta>` and `<title>` tags (Gumroad supplies its own page head) and the `pathLength` and `open` attributes; the script puts the last two back. Anything else in `.sanitization_report` needs a look.
 
 Check in the report that these survived:
 
