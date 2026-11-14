@@ -1,0 +1,61 @@
+plugins {
+    id "com.android.application"
+}
+
+// Release signing is read from the environment, so no key ever lives in the repository:
+//   TRICKOLOGUE_KEYSTORE, TRICKOLOGUE_KEYSTORE_PASSWORD, TRICKOLOGUE_KEY_ALIAS, TRICKOLOGUE_KEY_PASSWORD
+def keystorePath = System.getenv("TRICKOLOGUE_KEYSTORE")
+
+android {
+    namespace "com.trickologue.app"
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.trickologue.app"
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName "0.1.0"
+    }
+
+    signingConfigs {
+        if (keystorePath) {
+            release {
+                storeFile file(keystorePath)
+                storePassword System.getenv("TRICKOLOGUE_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("TRICKOLOGUE_KEY_ALIAS")
+                keyPassword System.getenv("TRICKOLOGUE_KEY_PASSWORD")
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+        release {
+            minifyEnabled false
+            if (keystorePath) signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        abortOnError false
+    }
+}
+
+// The page the app shows is built from app/ and data/ by tools/build.mjs.
+tasks.register("checkPage") {
+    doLast {
+        if (!file("src/main/assets/index.html").exists()) {
+            throw new GradleException("src/main/assets/index.html is missing. Run `node tools/build.mjs` in the repository root first.")
+        }
+    }
+}
+preBuild.dependsOn("checkPage")

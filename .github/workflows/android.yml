@@ -1,0 +1,40 @@
+name: Android APK
+
+# Builds the Android app on every push or pull request that touches it, and on demand.
+# The APK is built from the public sources, so it carries no book text.
+on:
+  push:
+    branches: [main]
+    paths: ["android/**", "app/**", "data/**", "tools/**", ".github/workflows/android.yml"]
+  pull_request:
+    paths: ["android/**", "app/**", "data/**", "tools/**", ".github/workflows/android.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build the page and the Scriptable script
+        run: node tools/build.mjs
+      - name: Check the script against the Scriptable stand-in
+        run: node tools/test-scriptable.mjs
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build the debug APK
+        working-directory: android
+        run: ./gradlew --no-daemon assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Trickologue-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
